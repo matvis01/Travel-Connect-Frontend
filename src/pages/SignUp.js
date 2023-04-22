@@ -1,4 +1,4 @@
-import React,{useState} from "react"
+import React, { useState } from "react"
 import Avatar from "@mui/material/Avatar"
 import Button from "@mui/material/Button"
 import CssBaseline from "@mui/material/CssBaseline"
@@ -10,38 +10,55 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
+import api from "@/api/api"
+import { useRouter } from "next/router"
 
 const theme = createTheme()
 
 export default function SignUp() {
-
   const [fieldsErrors, setFiledErors] = useState([])
-  function chceckIsCorrectlyFilled(data){
+  const router = useRouter()
+
+  function isCorrectlyFilled(data) {
     let errors = []
     data.forEach((el) => {
       if (el.length == 0) {
         errors.push("field is required")
-      }
-      else{
+      } else {
         errors.push(null)
       }
     })
-    if(data.get("confirmPassword") != data.get("password")){
+    if (data.get("confirmPassword") != data.get("password")) {
       errors[4] = "passwords don't match"
     }
     setFiledErors(errors)
-    console.log(errors)
+
+    return !errors.some(Boolean)
   }
 
-  const handleSubmit = (event) => {
+  async function handleSubmit(event) {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    chceckIsCorrectlyFilled(data)
-    
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // })
+    if (isCorrectlyFilled(data)) {
+      try {
+        const res = await api.post("/Account/sign-up", {
+          firstName: data.get("firstName"),
+          lastName: data.get("lastName"),
+          email: data.get("email"),
+          password: data.get("password"),
+        })
+        router.push("/signIn")
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    })
+
+    // console.log("data:", data)
   }
 
   function checkError(event) {
@@ -49,7 +66,6 @@ export default function SignUp() {
       console.log(event.target)
     }
   }
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -61,7 +77,6 @@ export default function SignUp() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -87,8 +102,8 @@ export default function SignUp() {
                   label="First Name"
                   autoFocus
                   onChange={checkError}
-                  error = {fieldsErrors[0] != null}
-                  helperText = {fieldsErrors[0]}
+                  error={fieldsErrors[0] != null}
+                  helperText={fieldsErrors[0]}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -99,8 +114,8 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
-                  error = {fieldsErrors[1] != null}
-                  helperText = {fieldsErrors[1]}
+                  error={fieldsErrors[1] != null}
+                  helperText={fieldsErrors[1]}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -111,8 +126,8 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  error = {fieldsErrors[2] != null}
-                  helperText = {fieldsErrors[2]}
+                  error={fieldsErrors[2] != null}
+                  helperText={fieldsErrors[2]}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -124,8 +139,8 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  error = {fieldsErrors[3] != null}
-                  helperText = {fieldsErrors[3]}
+                  error={fieldsErrors[3] != null}
+                  helperText={fieldsErrors[3]}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -137,8 +152,8 @@ export default function SignUp() {
                   type="password"
                   id="confirmPassword"
                   autoComplete="new-password"
-                  error = {fieldsErrors[4] != null}
-                  helperText = {fieldsErrors[4]}
+                  error={fieldsErrors[4] != null}
+                  helperText={fieldsErrors[4]}
                 />
               </Grid>
             </Grid>

@@ -12,17 +12,34 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
+import api from "../api/api"
+import { useRouter } from "next/router"
 
 const theme = createTheme()
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const router = useRouter()
+
+  async function handleSubmit(event) {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    })
+
+    try {
+      const res = await api.post("/Account/sign-in", {
+        email: data.get("email"),
+        password: data.get("password"),
+      })
+      const { accessToken } = res.data
+      localStorage.setItem("token", accessToken)
+      router.push("/")
+    } catch (err) {
+      console.log(err)
+    }
+
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // })
   }
 
   return (
