@@ -10,12 +10,16 @@ import AccountCircle from "@mui/icons-material/AccountCircle"
 import NotificationsIcon from "@mui/icons-material/Notifications"
 import MoreIcon from "@mui/icons-material/MoreVert"
 import { Button } from "@mui/material"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/router"
+import axios from "axios"
 
 export default function NavBar() {
   const [anchorEl, setAnchorEl] = useState(null)
   const [anchorNotification, setAnchorNotification] = useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null)
+
+  const router = useRouter()
 
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
@@ -27,6 +31,19 @@ export default function NavBar() {
     "This is message 2",
     "And this is message 3",
   ]
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const res = await axios.get("/Notification", {
+  //         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+  //       })
+  //       console.log(res)
+  //     } catch (e) {
+  //       console.log(e)
+  //     }
+  //   }
+  //   fetchData()
+  // })
 
   const handleNotificationsOpen = (event) => {
     setAnchorNotification(event.currentTarget)
@@ -54,6 +71,11 @@ export default function NavBar() {
     setMobileMoreAnchorEl(event.currentTarget)
   }
 
+  function logOut() {
+    localStorage.removeItem("token")
+    router.push("/SignIn")
+  }
+
   const menuId = "primary-search-account-menu"
   const renderProfileMenu = (
     <Menu
@@ -72,7 +94,7 @@ export default function NavBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
+      <MenuItem onClick={logOut}>Log Out</MenuItem>
     </Menu>
   )
 
