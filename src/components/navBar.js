@@ -160,12 +160,13 @@ export default function NavBar() {
   )
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box sx={{ flexGrow: 1, height: "100px" }}>
+      <AppBar position="fixed">
         <Toolbar>
           <Button
             variant="text"
             sx={{ color: "white", fontSize: 18, w: 30 }} //textTransform: "none"
+            href="/"
           >
             Home
           </Button>

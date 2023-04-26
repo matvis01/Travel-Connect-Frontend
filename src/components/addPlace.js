@@ -10,13 +10,9 @@ import {
   ListItemText,
   IconButton,
   Button,
-  Autocomplete,
 } from "@mui/material"
 import { MuiFileInput } from "mui-file-input"
-import DeleteIcon from "@mui/icons-material/Delete"
-import Avatar from "@mui/material/Avatar"
-import FolderIcon from "@mui/icons-material/Folder"
-import { MultilineChart } from "@mui/icons-material"
+import GoogleMapsInput from "./googleMapsInput"
 
 export default function addPlace(props) {
   function handleSubmit(event) {
@@ -33,44 +29,10 @@ export default function addPlace(props) {
       : setImages((prev) => [...newFile, ...prev])
   }
 
-  let options = ["xd", "xddddd"]
-
   function removeImage(index = 0) {
-    // console.log("xd")
-    // return () => {
-    //   if (images.length === 1) {
     setImages([])
-    //   } else {
-    //     setImages((prev) => prev.filter((_, i) => i !== index))
-    //   }
-    // }
   }
-
-  //   const listOfFiles = (
-  //     <List dense>
-  //       {images?.map((file, index) => (
-  //         <ListItem
-  //           key={index}
-  //           secondaryAction={
-  //             <IconButton
-  //               edge="end"
-  //               aria-label="delete"
-  //               onClick={removeImage(index)} strzele sobie w glowe
-  //             >
-  //               <DeleteIcon />
-  //             </IconButton>
-  //           }
-  //         >
-  //           <ListItemAvatar>
-  //             <Avatar>
-  //               <FolderIcon />
-  //             </Avatar>
-  //           </ListItemAvatar>
-  //           <ListItemText primary={file?.name} />
-  //         </ListItem>
-  //       ))}
-  //     </List>
-  //   )
+  const [place, setPlace] = useState()
 
   return (
     <>
@@ -109,18 +71,12 @@ export default function addPlace(props) {
             variant="standard"
             multiline
           />
-          {options.length > 0 ? (
-            <Autocomplete
-              id="Address"
-              freeSolo
-              options={options}
-              renderInput={(params) => (
-                <TextField {...params} label="Address" variant="standard" />
-              )}
-            />
-          ) : (
-            <TextField id="Address" label="Address" variant="standard" />
-          )}
+          <GoogleMapsInput
+            setPlace={(value) => {
+              setPlace(value)
+            }}
+          />
+
           <MuiFileInput
             label="Upload Images"
             inputProps={{
