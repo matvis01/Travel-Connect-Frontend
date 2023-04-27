@@ -14,7 +14,9 @@ export default function Home() {
     <>
       <NavBar />
       <FilterBar />
-      <Button className="addCard" onClick={handleOpen}>add place</Button>
+      <div className="addCard">
+      <Button className="addButton" onClick={handleOpen}>add place</Button>
+      </div>
       <AddPlace open={addPlace} handleClose={handleClose} />
       <EventCard />
       <EventCard />
