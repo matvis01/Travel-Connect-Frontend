@@ -13,6 +13,7 @@ import {
 } from "@mui/material"
 import { MuiFileInput } from "mui-file-input"
 import GoogleMapsInput from "./googleMapsInput"
+import { AddCard } from "@mui/icons-material"
 
 export default function addPlace(props) {
   function handleSubmit(event) {
@@ -36,7 +37,7 @@ export default function addPlace(props) {
 
   return (
     <>
-      <Modal
+    <Modal
         open={props.open}
         onClose={props.handleClose}
         aria-labelledby="modal-modal-title"

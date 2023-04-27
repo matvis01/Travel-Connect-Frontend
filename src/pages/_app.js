@@ -1,4 +1,5 @@
 import "@/styles/globals.css"
+import "@/styles/eventCardStyles.css"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 
 const theme = createTheme({
