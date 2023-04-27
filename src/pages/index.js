@@ -7,7 +7,7 @@ export default function Home() {
   const [addPlace, setAddPlace] = useState(false)
   const handleOpen = () => setAddPlace(true)
   const handleClose = () => setAddPlace(false)
-
+//test
   return (
     <>
       <NavBar />
