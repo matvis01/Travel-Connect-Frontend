@@ -13,6 +13,7 @@ import {
   Box,
   ImageList,
   ImageListItem,
+  Container,
 } from "@mui/material"
 
 export default function Destination(props) {
@@ -24,27 +25,27 @@ export default function Destination(props) {
   const router = useRouter()
   const { id } = router.query
 
-  useEffect(() => {
-    // setCenter({ lat: 52.237049, lng: 21.017532 })
-    setLoaded(true)
-  }, [isLoaded])
+  // useEffect(() => {
+  //   // setCenter({ lat: 52.237049, lng: 21.017532 })
+  //   setLoaded(true)
+  // }, [isLoaded])
 
   const center = { lat: 52.237049, lng: 21.017532 }
 
   return (
     <>
       <NavBar />
-      <Box
+      <Container
         sx={{
           display: "flex",
           flexDirection: "column",
           height: "100%",
           alignItems: "center",
-          width: "50%",
-          margin: "auto",
-          "@media (max-width: 1000px)": {
-            width: "90%",
-          },
+          //width: "50%",
+          // margin: "auto",
+          // "@media (max-width: 1000px)": {
+          //   width: "90%",
+          // },
         }}
       >
         <Typography
@@ -60,7 +61,7 @@ export default function Destination(props) {
 
         <ImageList
           sx={{ width: "100%" }}
-          cols={2}
+          //cols={2}
           rowHeight="auto"
           variant="string"
         >
@@ -87,7 +88,7 @@ export default function Destination(props) {
         ) : (
           <h1>Loading...</h1>
         )}
-      </Box>
+      </Container>
     </>
   )
 }

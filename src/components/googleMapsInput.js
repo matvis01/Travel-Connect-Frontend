@@ -7,9 +7,10 @@ import Grid from "@mui/material/Grid"
 import Typography from "@mui/material/Typography"
 import parse from "autosuggest-highlight/parse"
 import { debounce } from "@mui/material/utils"
-
-// This key was created specifically for the demo in mui.com.
-// You need to create a new one for your application.
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete"
 
 function getOptionLabel(option) {
   return typeof option === "string" ? option : option.description
@@ -36,7 +37,6 @@ export default function GoogleMapsInput(props) {
   const loaded = React.useRef(false)
 
   //   const apiKey = process.env.REACT_APP_GOOGLE_MAPS_KEY
-  //   console.log(process.env.NEXT_PUBLIC_ANALITICS_API_KEY)
 
   if (typeof window !== "undefined" && !loaded.current) {
     if (!document.querySelector("#google-maps")) {
@@ -96,7 +96,13 @@ export default function GoogleMapsInput(props) {
   }, [value, inputValue, fetch])
 
   React.useEffect(() => {
-    props.setPlace(value)
+    async function getGeoCode() {
+      const results = await getGeocode({ address: value.description })
+      const position = await getLatLng(results[0])
+      //console.log(position)
+      props.setPlace({ name: value.description, position: position })
+    }
+    value !== null && getGeoCode()
   }, [value])
 
   return (
@@ -126,6 +132,7 @@ export default function GoogleMapsInput(props) {
           label="Add a location"
           fullWidth
           variant="standard"
+          required
         />
       )}
       renderOption={(props, option) => {

@@ -45,6 +45,10 @@ export default function NavBar() {
   //   fetchData()
   // })
 
+  useEffect(() => {
+    console.log(router.route)
+  }, [])
+
   const handleNotificationsOpen = (event) => {
     setAnchorNotification(event.currentTarget)
     setIsNotificationsOpen(true)
@@ -93,7 +97,13 @@ export default function NavBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem
+        onClick={() => {
+          router.push("/profile")
+        }}
+      >
+        Profile
+      </MenuItem>
       <MenuItem onClick={logOut}>Log Out</MenuItem>
     </Menu>
   )
@@ -160,17 +170,33 @@ export default function NavBar() {
   )
 
   return (
-    <Box sx={{ flexGrow: 1, height: "100px" }}>
+    <Box sx={{ flexGrow: 1, height: "80px" }}>
       <AppBar position="fixed">
         <Toolbar>
           <Button
             variant="text"
-            sx={{ color: "white", fontSize: 18, w: 30 }} //textTransform: "none"
+            sx={{
+              color: "white",
+              fontSize: 18,
+              w: 30,
+              textDecorationLine: router.route == "/" && "underline",
+              ":hover": { textDecorationLine: "underline" },
+            }} //textTransform: "none"
             href="/"
           >
             Home
           </Button>
-          <Button variant="text" sx={{ color: "white", fontSize: 18, w: 30 }}>
+          <Button
+            variant="text"
+            href="/events"
+            sx={{
+              color: "white",
+              fontSize: 18,
+              w: 30,
+              textDecorationLine: router.route == "/events" && "underline",
+              ":hover": { textDecorationLine: "underline" },
+            }}
+          >
             Events
           </Button>
           <Box sx={{ flexGrow: 1 }} />
