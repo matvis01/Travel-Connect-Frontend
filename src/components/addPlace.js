@@ -1,16 +1,5 @@
 import React, { useState } from "react"
-import {
-  Modal,
-  Box,
-  List,
-  ListItem,
-  Typography,
-  TextField,
-  ListItemAvatar,
-  ListItemText,
-  IconButton,
-  Button,
-} from "@mui/material"
+import { Modal, Box, Typography, TextField, Button } from "@mui/material"
 import { MuiFileInput } from "mui-file-input"
 import GoogleMapsInput from "./googleMapsInput"
 
@@ -45,7 +34,6 @@ export default function addPlace(props) {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          padding: "0",
         }}
       >
         <Box
@@ -64,7 +52,7 @@ export default function addPlace(props) {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Create Place
           </Typography>
-          <TextField id="Name" label="Place name" variant="standard" />
+          <TextField id="Name" label="Place name" variant="standard" required />
           <TextField
             id="Description"
             label="Description"
@@ -87,7 +75,6 @@ export default function addPlace(props) {
             onChange={handleChange}
             variant="standard"
           />
-          {/* {images.length > 0 && listOfFiles} */}
           <Button type="submit">Submit</Button>
         </Box>
       </Modal>
