@@ -1,3 +1,4 @@
+import "@/styles/eventCardStyles.css"
 import "@/styles/globals.css"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 
