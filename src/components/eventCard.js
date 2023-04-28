@@ -17,10 +17,10 @@ export default function eventCard() {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-           Nazwa eventu
+           Nazwa miejsca
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Opis eventu: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non justo leo. Duis nibh libero, imperdiet quis lacus at, egestas lobortis neque.
+            Opis miejsca: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non justo leo. Duis nibh libero, imperdiet quis lacus at, egestas lobortis neque.
              Cras nec magna in sapien sollicitudin varius venenatis id lorem. Mauris convallis efficitur leo in imperdiet.
              Morbi vitae nulla sit amet turpis semper pulvinar. Integer congue quam nec purus gravida, at commodo urna efficitur
           </Typography>
@@ -28,7 +28,7 @@ export default function eventCard() {
       </CardActionArea>
       <CardActions>
         <Button className="signButton" size="small" color="primary">
-          Sign up
+        See details
         </Button>
       </CardActions>
     </Card>
