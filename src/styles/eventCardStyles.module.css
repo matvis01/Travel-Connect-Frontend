@@ -1,0 +1,47 @@
+.eventCard {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(212, 211, 211);
+  margin-bottom: 50px;
+  border-radius: 2%;
+  max-width: 375px;
+  align-items: center;
+  justify-content: center;
+}
+.addCard {
+  background-color: pink;
+}
+.addButton {
+  display: inline-block;
+  height: 50px;
+  background-color: red;
+  width: 50%;
+  border-radius: 5%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.filter-div {
+  margin-top: 0px;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  height: 50px;
+  background-color: blueviolet;
+}
+.filter1 {
+  background-color: aqua;
+  margin-bottom: 100px;
+}
+.filter2 {
+  background-color: red;
+  margin-bottom: 100px;
+}
+.filter3 {
+  background-color: gray;
+  margin-bottom: 100px;
+}
+.filter4 {
+  background-color: green;
+  margin-bottom: 100px;
+}
+/* // */
