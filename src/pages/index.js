@@ -14,9 +14,7 @@ export default function Home() {
   return (
     <>
       <NavBar />
-      <FilterBar>
-     <SelectAutoWidth />
-      </FilterBar>
+      <FilterBar />
       <Container
         sx={{
           display: "flex",
@@ -25,11 +23,12 @@ export default function Home() {
           marginBottom: "100px",
           marginTop: "0px",
           width: "100%",
-          
+          gap: "30px",
+          pt: "30px",
         }}
       >
         <div className="addCard">
-          <Button className="addButton" onClick={handleOpen}>
+          <Button onClick={handleOpen} variant="contained">
             add place
           </Button>
         </div>

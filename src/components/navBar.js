@@ -9,7 +9,7 @@ import Menu from "@mui/material/Menu"
 import AccountCircle from "@mui/icons-material/AccountCircle"
 import NotificationsIcon from "@mui/icons-material/Notifications"
 import MoreIcon from "@mui/icons-material/MoreVert"
-import { Button } from "@mui/material"
+import { Button, Container } from "@mui/material"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import axios from "axios"
@@ -170,7 +170,7 @@ export default function NavBar() {
   )
 
   return (
-    <Box sx={{ flexGrow: 1, height: "56px" }}>
+    <Box sx={{ flexGrow: 1, height: "64px" }}>
       <AppBar position="fixed">
         <Toolbar>
           <Button
@@ -179,9 +179,10 @@ export default function NavBar() {
               color: "white",
               fontSize: 18,
               w: 30,
+              height: "64px",
               textDecorationLine: router.route == "/" && "underline",
               ":hover": { textDecorationLine: "underline" },
-            }} //textTransform: "none"
+            }}
             href="/"
           >
             Home

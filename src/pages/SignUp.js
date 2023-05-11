@@ -16,7 +16,7 @@ import { useRouter } from "next/router"
 const theme = createTheme()
 
 export default function SignUp() {
-  const [fieldsErrors, setFiledErors] = useState([])
+  const [fieldsErrors, setFiledErrors] = useState([])
   const router = useRouter()
 
   function isCorrectlyFilled(data) {
@@ -31,7 +31,7 @@ export default function SignUp() {
     if (data.get("confirmPassword") != data.get("password")) {
       errors[4] = "passwords don't match"
     }
-    setFiledErors(errors)
+    setFiledErrors(errors)
 
     return !errors.some(Boolean)
   }

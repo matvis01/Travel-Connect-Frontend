@@ -1,12 +1,19 @@
 import SelectAutoWidth from "@/components/selectAutoWidth"
+import { Box } from "@mui/material"
 export default function filterBar() {
-   return (
-  <div className="filter-div">
-  <div className="filter1"><SelectAutoWidth /></div>
-  <div className="filter2"><SelectAutoWidth /></div>
-  <div className="filter3"><SelectAutoWidth /></div>
-  <div className="filter4"><SelectAutoWidth /></div>
-  </div>
-   );
- }
- //
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-around",
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+      }}
+    >
+      <SelectAutoWidth />
+      <SelectAutoWidth />
+      <SelectAutoWidth />
+      <SelectAutoWidth />
+    </Box>
+  )
+}
+//
