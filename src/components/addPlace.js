@@ -1,10 +1,40 @@
-import React, { useState } from "react"
-import { Modal, Box, Typography, TextField, Button } from "@mui/material"
+import React, { use, useEffect, useState } from "react"
+import {
+  Modal,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  InputLabel,
+  MenuItem,
+  FormControl,
+} from "@mui/material"
 import { MuiFileInput } from "mui-file-input"
 import GoogleMapsInput from "./googleMapsInput"
-import { AddCard } from "@mui/icons-material"
+import api from "../api/api"
+import Select from "@mui/material/Select"
 
 export default function addPlace(props) {
+  const [place, setPlace] = useState()
+  const [categories, setCategories] = useState()
+  const [currentCategory, setCurrentCategory] = useState({})
+  const [currentTags, setCurrentTags] = useState()
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const res = await api.get("/Category", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        })
+        setCategories(res.data)
+        console.log(res.data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fetchCategories()
+  }, [])
+
   function handleSubmit(event) {
     event.preventDefault()
 
@@ -22,11 +52,34 @@ export default function addPlace(props) {
   function removeImage(index = 0) {
     setImages([])
   }
-  const [place, setPlace] = useState()
+
+  const filters = currentCategory?.filters?.map((filter) => (
+    <FormControl sx={{ width: "100%" }}>
+      <InputLabel id="filter">{filter.name}</InputLabel>
+      <Select
+        id="filter"
+        label="filter"
+        variant="standard"
+        disabled={filter.values == undefined}
+        onChange={(event) => {
+          setCurrentTags(event.target.value)
+          console.log(event.target.value)
+        }}
+      >
+        {filter.values?.map((tag, i) => {
+          return (
+            <MenuItem value={tag} key={i}>
+              {tag.value}
+            </MenuItem>
+          )
+        })}
+      </Select>
+    </FormControl>
+  ))
 
   return (
     <>
-    <Modal
+      <Modal
         open={props.open}
         onClose={props.handleClose}
         aria-labelledby="modal-modal-title"
@@ -41,8 +94,6 @@ export default function addPlace(props) {
           component="form"
           onSubmit={handleSubmit}
           sx={{
-            // width: "60%",
-            // height: "80%",
             backgroundColor: "white",
             display: "flex",
             flexDirection: "column",
@@ -76,10 +127,30 @@ export default function addPlace(props) {
             onChange={handleChange}
             variant="standard"
           />
+          <FormControl>
+            <InputLabel id="category">Category</InputLabel>
+            <Select
+              labelId="category"
+              id="category"
+              label="category"
+              variant="standard"
+              onChange={(event) => {
+                setCurrentCategory(event.target.value)
+              }}
+            >
+              {categories?.map((category, i) => {
+                return (
+                  <MenuItem value={category} key={i}>
+                    {category.name}
+                  </MenuItem>
+                )
+              })}
+            </Select>
+          </FormControl>
+          <Box sx={{ display: "flex" }}>{filters}</Box>
           <Button type="submit">Submit</Button>
         </Box>
       </Modal>
     </>
   )
 }
-//
