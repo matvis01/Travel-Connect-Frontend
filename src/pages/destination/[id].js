@@ -14,7 +14,9 @@ import {
   ImageList,
   ImageListItem,
   Container,
+  backdropClasses,
 } from "@mui/material"
+import { BorderAllRounded, Margin } from "@mui/icons-material"
 
 export default function Destination(props) {
   const { isLoaded } = useLoadScript({
@@ -41,6 +43,7 @@ export default function Destination(props) {
           flexDirection: "column",
           height: "100%",
           alignItems: "center",
+          backgroundColor: "#d7e6fa",
           //width: "50%",
           // margin: "auto",
           // "@media (max-width: 1000px)": {
@@ -49,21 +52,39 @@ export default function Destination(props) {
         }}
       >
         <Typography
-          variant="h2"
+          variant="h1"
           component="h1"
           sx={{
             flexGrow: 1,
+            marginTop: "70px",
+            backgroundColor: "#c1cfe1",
+            WebkitBorderRadius: "5px",
+            padding: "10px",
+            borderTop: "1px solid",
+            borderBottom: "1px solid",
+            fontWeight: "medium",
           }}
         >
           Destination {id}
         </Typography>
-        <Typography variant="body1">opis</Typography>
+        <Typography variant="body1"
+        sx={{
+          flexGrow: 1,
+          marginTop: "50px",
+          marginBottom: "50px",
+          width: "80%",
+          backgroundColor: "#c1cfe1",
+          WebkitBorderRadius: "5px",
+          padding: "10px",
+          borderTop: "1px solid",
+          borderBottom: "1px solid",
+        }}
+        >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged</Typography>
 
         <ImageList
-          sx={{ width: "100%" }}
-          //cols={2}
-          rowHeight="auto"
-          variant="string"
+          sx={{ width: "90%"
+                
+        }} variant="woven" cols={3} gap={8}
         >
           {itemData.map((item) => (
             <ImageListItem key={item.img}>
