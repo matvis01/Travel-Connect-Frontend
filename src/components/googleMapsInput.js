@@ -99,8 +99,31 @@ export default function GoogleMapsInput(props) {
     async function getGeoCode() {
       const results = await getGeocode({ address: value.description })
       const position = await getLatLng(results[0])
-      //console.log(position)
-      props.setPlace({ name: value.description, position: position })
+      let fullLocation = {}
+      results[0].address_components.forEach((component) => {
+        component.types.forEach((type) => {
+          if (type === "administrative_area_level_1") {
+            fullLocation.region = component.long_name
+          }
+          if (type === "locality") {
+            fullLocation.city = component.long_name
+          }
+          if (type === "country") {
+            fullLocation.country = component.long_name
+          }
+          if (type === "postal_code") {
+            fullLocation.zipCode = component.long_name
+          }
+          if (type == "route") {
+            fullLocation.street = component.long_name
+          }
+        })
+      })
+      fullLocation.lat = position.lat
+      fullLocation.lon = position.lng
+      fullLocation.name = value.description
+
+      props.setPlace(fullLocation)
     }
     value !== null && getGeoCode()
   }, [value])

@@ -5,33 +5,33 @@ import CardMedia from "@mui/material/CardMedia"
 import Typography from "@mui/material/Typography"
 import { Button, CardActionArea, CardActions } from "@mui/material"
 
-export default function eventCard() {
+export default function placeCard(props) {
+  const { name, image, description } = props.place
   return (
     <Card className="eventCard">
       <CardActionArea>
         <CardMedia
           component="img"
           height="140"
-          image="https://picsum.photos/id/575/2000"
-          alt="oczko morskie"
+          image={image || "https://picsum.photos/id/575/2000"}
+          alt="image"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-           Nazwa miejsca
+            {name || "Nazwa miejsca"}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Opis miejsca: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non justo leo. Duis nibh libero, imperdiet quis lacus at, egestas lobortis neque.
-             Cras nec magna in sapien sollicitudin varius venenatis id lorem. Mauris convallis efficitur leo in imperdiet.
-             Morbi vitae nulla sit amet turpis semper pulvinar. Integer congue quam nec purus gravida, at commodo urna efficitur
+            Opis miejsca:
+            {description ||
+              "Reprehenderit officia consectetur ad ullamco cillum velit magna amet tempor id eiusmod id elit velit. Consequat ea consequat deserunt sunt. Eu sint ullamco qui tempor nulla esse in dolor veniam fugiat velit."}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
         <Button className="signButton" size="small" color="primary">
-        See details
+          See details
         </Button>
       </CardActions>
     </Card>
   )
 }
-//

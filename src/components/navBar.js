@@ -9,10 +9,9 @@ import Menu from "@mui/material/Menu"
 import AccountCircle from "@mui/icons-material/AccountCircle"
 import NotificationsIcon from "@mui/icons-material/Notifications"
 import MoreIcon from "@mui/icons-material/MoreVert"
-import { Button, Container } from "@mui/material"
+import { Button } from "@mui/material"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
-import axios from "axios"
 
 export default function NavBar() {
   const [anchorEl, setAnchorEl] = useState(null)

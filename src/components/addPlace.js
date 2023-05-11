@@ -17,32 +17,43 @@ import Select from "@mui/material/Select"
 export default function addPlace(props) {
   const [place, setPlace] = useState()
   const [categories, setCategories] = useState()
-  const [currentCategory, setCurrentCategory] = useState({})
-  const [currentTags, setCurrentTags] = useState()
-
+  const [currentCategory, setCurrentCategory] = useState()
+  const [currentTags, setCurrentTags] = useState([])
+  const [images, setImages] = useState([])
   useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const res = await api.get("/Category", {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        })
-        setCategories(res.data)
-        console.log(res.data)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    fetchCategories()
-  }, [])
+    setCategories(props.categories)
+  }, [props.categories])
 
   function handleSubmit(event) {
     event.preventDefault()
-
     const data = new FormData(event.currentTarget)
+    const filterIds = currentTags.map((tag) => tag.id)
 
-    console.log(data)
+    let imageUrls = []
+
+    images.forEach(async (image) => {
+      try {
+        const res = await api.post("/Photos", image, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        })
+        console.log(res.data)
+        imageUrls.push(res.data.url)
+      } catch (err) {
+        console.log(err)
+      }
+    })
+
+    const finishedPlace = {
+      name: data.get("Name"),
+      description: data.get("Description"),
+      categoryId: currentCategory.id,
+      address: place,
+      filtersIds: filterIds,
+      photos: images,
+    }
+
+    console.log(finishedPlace)
   }
-  const [images, setImages] = useState([])
   const handleChange = (newFile) => {
     newFile.length == 0
       ? removeImage()
@@ -53,17 +64,20 @@ export default function addPlace(props) {
     setImages([])
   }
 
-  const filters = currentCategory?.filters?.map((filter) => (
+  const filters = currentCategory?.filters?.map((filter, index) => (
     <FormControl sx={{ width: "100%" }}>
       <InputLabel id="filter">{filter.name}</InputLabel>
       <Select
-        id="filter"
+        name="filter"
         label="filter"
         variant="standard"
         disabled={filter.values == undefined}
         onChange={(event) => {
-          setCurrentTags(event.target.value)
-          console.log(event.target.value)
+          setCurrentTags((prev) => {
+            const updatedTags = [...prev]
+            updatedTags[index] = event.target.value
+            return updatedTags
+          })
         }}
       >
         {filter.values?.map((tag, i) => {
@@ -104,9 +118,16 @@ export default function addPlace(props) {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Create Place
           </Typography>
-          <TextField id="Name" label="Place name" variant="standard" required />
+          <TextField
+            id="Name"
+            name="Name"
+            label="Place name"
+            variant="standard"
+            required
+          />
           <TextField
             id="Description"
+            name="Description"
             label="Description"
             variant="standard"
             multiline
@@ -122,6 +143,7 @@ export default function addPlace(props) {
             inputProps={{
               accept: "image/*",
             }}
+            name="images"
             multiple={true}
             value={images}
             onChange={handleChange}
@@ -132,6 +154,7 @@ export default function addPlace(props) {
             <Select
               labelId="category"
               id="category"
+              name="category"
               label="category"
               variant="standard"
               onChange={(event) => {
