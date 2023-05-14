@@ -99,13 +99,22 @@ export default function GoogleMapsInput(props) {
     async function getGeoCode() {
       const results = await getGeocode({ address: value.description })
       const position = await getLatLng(results[0])
-      let fullLocation = {}
+      let fullLocation = {
+        city: "",
+        street: "",
+        zipCode: "",
+        country: "",
+        lat: null,
+        lon: null,
+      }
       results[0].address_components.forEach((component) => {
         component.types.forEach((type) => {
-          if (type === "administrative_area_level_1") {
-            fullLocation.region = component.long_name
-          }
-          if (type === "locality") {
+          if (
+            type === "locality" ||
+            type === "sublocality" ||
+            type === "neighborhood" ||
+            type === "political"
+          ) {
             fullLocation.city = component.long_name
           }
           if (type === "country") {
@@ -121,7 +130,9 @@ export default function GoogleMapsInput(props) {
       })
       fullLocation.lat = position.lat
       fullLocation.lon = position.lng
-      fullLocation.name = value.description
+      // fullLocation.name = value.description
+
+      console.log(fullLocation)
 
       props.setPlace(fullLocation)
     }

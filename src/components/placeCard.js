@@ -4,16 +4,22 @@ import CardContent from "@mui/material/CardContent"
 import CardMedia from "@mui/material/CardMedia"
 import Typography from "@mui/material/Typography"
 import { Button, CardActionArea, CardActions } from "@mui/material"
+import { useRouter } from "next/router"
 
 export default function placeCard(props) {
-  const { name, image, description } = props.place
+  const router = useRouter()
+  const { id } = props.place
+  const handleClick = () => {
+    router.push(`/destination/${id}`)
+  }
+  const { name, photoUrl, description } = props.place
   return (
     <Card className="eventCard">
       <CardActionArea>
         <CardMedia
           component="img"
           height="140"
-          image={image || "https://picsum.photos/id/575/2000"}
+          image={photoUrl || "https://picsum.photos/id/575/2000"}
           alt="image"
         />
         <CardContent>
@@ -28,7 +34,12 @@ export default function placeCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button className="signButton" size="small" color="primary">
+        <Button
+          className="signButton"
+          size="small"
+          color="primary"
+          onClick={handleClick}
+        >
           See details
         </Button>
       </CardActions>

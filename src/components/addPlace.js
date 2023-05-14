@@ -24,7 +24,7 @@ export default function addPlace(props) {
     setCategories(props.categories)
   }, [props.categories])
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
     const filterIds = currentTags.map((tag) => tag.id)
@@ -32,27 +32,55 @@ export default function addPlace(props) {
     let imageUrls = []
 
     images.forEach(async (image) => {
+      const formData = new FormData()
+      formData.append("image", image)
       try {
-        const res = await api.post("/Photos", image, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        const res = await api.post("/Photos", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         })
+
         console.log(res.data)
-        imageUrls.push(res.data.url)
+        imageUrls.push({ url: res.data.url })
+
+        const finishedPlace = {
+          name: data.get("Name"),
+          description: data.get("Description"),
+          categoryId: currentCategory.id,
+          address: place,
+          filtersIds: filterIds,
+          photos: imageUrls,
+        }
+
+        console.log(finishedPlace)
+
+        const res2 = await api.post("/TouristPlace", finishedPlace, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        })
+        console.log(res2.data)
+        props.handleClose()
       } catch (err) {
         console.log(err)
       }
     })
 
-    const finishedPlace = {
-      name: data.get("Name"),
-      description: data.get("Description"),
-      categoryId: currentCategory.id,
-      address: place,
-      filtersIds: filterIds,
-      photos: images,
-    }
-
-    console.log(finishedPlace)
+    // try {
+    //   const res = await api.post("/TouristPlace", finishedPlace, {
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //       "Content-Type": "application/json",
+    //     },
+    //   })
+    //   console.log(res.data)
+    //   props.handleClose()
+    // } catch (err) {
+    //   console.log(err)
+    //}
   }
   const handleChange = (newFile) => {
     newFile.length == 0
@@ -149,10 +177,12 @@ export default function addPlace(props) {
             onChange={handleChange}
             variant="standard"
           />
+
           <FormControl>
             <InputLabel id="category">Category</InputLabel>
             <Select
               labelId="category"
+              required
               id="category"
               name="category"
               label="category"

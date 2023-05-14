@@ -3,7 +3,6 @@ import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api"
 import { useEffect } from "react"
 import { useState } from "react"
 import { useRouter } from "next/router"
-
 import {
   Typography,
   Grid,
@@ -17,22 +16,35 @@ import {
   backdropClasses,
 } from "@mui/material"
 import { BorderAllRounded, Margin } from "@mui/icons-material"
+import api from "../../api/api"
+import { headers } from "next/dist/client/components/headers"
 
-export default function Destination(props) {
+export default function Destination({ id }) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_ANALITICS_API_KEY,
   })
-  //const [center, setCenter] = useState({ lat: 0, lng: 0 })
-  const [loaded, setLoaded] = useState(false)
-  const router = useRouter()
-  const { id } = router.query
+  const [TouristPlace, setTouristPlace] = useState()
+  const center = {
+    lat: TouristPlace?.address.lat || 0,
+    lng: TouristPlace?.address.lon || 0,
+  }
 
-  // useEffect(() => {
-  //   // setCenter({ lat: 52.237049, lng: 21.017532 })
-  //   setLoaded(true)
-  // }, [isLoaded])
-
-  const center = { lat: 52.237049, lng: 21.017532 }
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await api.get(`/TouristPlace/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        console.log(res.data)
+        setTouristPlace(res.data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fetchData()
+  }, [])
 
   return (
     <>
@@ -44,11 +56,6 @@ export default function Destination(props) {
           height: "100%",
           alignItems: "center",
           backgroundColor: "#d7e6fa",
-          //width: "50%",
-          // margin: "auto",
-          // "@media (max-width: 1000px)": {
-          //   width: "90%",
-          // },
         }}
       >
         <Typography
@@ -65,35 +72,29 @@ export default function Destination(props) {
             fontWeight: "medium",
           }}
         >
-          Destination {id}
+          {TouristPlace?.name}
         </Typography>
-        <Typography variant="body1"
-        sx={{
-          flexGrow: 1,
-          marginTop: "50px",
-          marginBottom: "50px",
-          width: "80%",
-          backgroundColor: "#c1cfe1",
-          WebkitBorderRadius: "5px",
-          padding: "10px",
-          borderTop: "1px solid",
-          borderBottom: "1px solid",
-        }}
-        >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged</Typography>
-
-        <ImageList
-          sx={{ width: "90%"
-                
-        }} variant="woven" cols={3} gap={8}
+        <Typography
+          variant="body1"
+          sx={{
+            flexGrow: 1,
+            marginTop: "50px",
+            marginBottom: "50px",
+            width: "80%",
+            backgroundColor: "#c1cfe1",
+            WebkitBorderRadius: "5px",
+            padding: "10px",
+            borderTop: "1px solid",
+            borderBottom: "1px solid",
+          }}
         >
-          {itemData.map((item) => (
-            <ImageListItem key={item.img}>
-              <img
-                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                alt={item.title}
-                loading="lazy"
-              />
+          {TouristPlace?.description}
+        </Typography>
+
+        <ImageList sx={{ width: "90%" }} variant="woven" cols={3} gap={8}>
+          {TouristPlace?.photos?.map((item, i) => (
+            <ImageListItem key={i}>
+              <img src={item.url} loading="lazy" />
             </ImageListItem>
           ))}
         </ImageList>
@@ -113,53 +114,14 @@ export default function Destination(props) {
     </>
   )
 }
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Breakfast",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-    title: "Burger",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-    title: "Camera",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-    title: "Coffee",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-    title: "Hats",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-    title: "Honey",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-    title: "Basketball",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-    title: "Fern",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-    title: "Mushrooms",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-    title: "Tomato basil",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-    title: "Sea star",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "Bike",
-  },
-]
+
+export async function getServerSideProps(context) {
+  const { query } = context
+  const { id } = query
+
+  return {
+    props: {
+      id,
+    },
+  }
+}

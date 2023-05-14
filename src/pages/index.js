@@ -30,6 +30,7 @@ export default function Home() {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
         setPlaces(res.data)
+        console.log(res.data)
       } catch (err) {
         console.log(err)
       }

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Box } from "@mui/material"
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material"
 import api from "../api/api"
+import { Filter } from "@mui/icons-material"
 
 export default function filterBar(props) {
   const { categories } = props
@@ -9,7 +10,6 @@ export default function filterBar(props) {
   const [currentTags, setCurrentTags] = useState([])
 
   useEffect(() => {
-    //const allFilters = [currentCategory?.id, currentTags]
     async function fetchPlaces() {
       try {
         const res = await api.get("/TouristPlace", {
@@ -18,6 +18,7 @@ export default function filterBar(props) {
           },
           params: {
             CategoryId: currentCategory?.id,
+            FilterValueId: currentTags[0],
           },
         })
         props.changePlaces(res.data)
@@ -64,7 +65,7 @@ export default function filterBar(props) {
         boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
       }}
     >
-      <FormControl sx={{ width: "10%", m: 1 }}>
+      <FormControl sx={{ width: "20%", m: 1 }}>
         <InputLabel id="category">Category</InputLabel>
         <Select
           labelId="category"
