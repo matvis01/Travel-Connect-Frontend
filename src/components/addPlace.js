@@ -44,43 +44,32 @@ export default function addPlace(props) {
 
         console.log(res.data)
         imageUrls.push({ url: res.data.url })
-
-        const finishedPlace = {
-          name: data.get("Name"),
-          description: data.get("Description"),
-          categoryId: currentCategory.id,
-          address: place,
-          filtersIds: filterIds,
-          photos: imageUrls,
-        }
-
-        console.log(finishedPlace)
-
-        const res2 = await api.post("/TouristPlace", finishedPlace, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-        })
-        console.log(res2.data)
-        props.handleClose()
       } catch (err) {
         console.log(err)
       }
     })
 
-    // try {
-    //   const res = await api.post("/TouristPlace", finishedPlace, {
-    //     headers: {
-    //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //       "Content-Type": "application/json",
-    //     },
-    //   })
-    //   console.log(res.data)
-    //   props.handleClose()
-    // } catch (err) {
-    //   console.log(err)
-    //}
+    const finishedPlace = {
+      name: data.get("Name"),
+      description: data.get("Description"),
+      categoryId: currentCategory.id,
+      address: place,
+      filtersIds: filterIds,
+      photos: imageUrls,
+    }
+
+    try {
+      const res = await api.post("/TouristPlace", finishedPlace, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      })
+      console.log(res.data)
+      props.handleClose()
+    } catch (err) {
+      console.log(err)
+    }
   }
   const handleChange = (newFile) => {
     newFile.length == 0
