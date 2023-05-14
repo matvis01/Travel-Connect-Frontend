@@ -31,23 +31,25 @@ export default function addPlace(props) {
 
     let imageUrls = []
 
-    images.forEach(async (image) => {
-      const formData = new FormData()
-      formData.append("image", image)
-      try {
-        const res = await api.post("/Photos", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        })
+    await Promise.all(
+      images.map(async (image) => {
+        const formData = new FormData()
+        formData.append("image", image)
+        try {
+          const res = await api.post("/Photos", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          })
 
-        console.log(res.data)
-        imageUrls.push({ url: res.data.url })
-      } catch (err) {
-        console.log(err)
-      }
-    })
+          console.log(res.data)
+          imageUrls.push({ url: res.data.url })
+        } catch (err) {
+          console.log(err)
+        }
+      })
+    )
 
     const finishedPlace = {
       name: data.get("Name"),
@@ -58,18 +60,23 @@ export default function addPlace(props) {
       photos: imageUrls,
     }
 
-    try {
-      const res = await api.post("/TouristPlace", finishedPlace, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-      })
-      console.log(res.data)
-      props.handleClose()
-    } catch (err) {
-      console.log(err)
+    async function postPlace() {
+      console.log(finishedPlace)
+      try {
+        const res = await api.post("/TouristPlace", finishedPlace, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        })
+        console.log(res.data)
+        props.handleClose()
+      } catch (err) {
+        console.log(err)
+      }
     }
+
+    postPlace()
   }
   const handleChange = (newFile) => {
     newFile.length == 0
