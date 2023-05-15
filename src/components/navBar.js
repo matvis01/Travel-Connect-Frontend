@@ -12,6 +12,7 @@ import MoreIcon from "@mui/icons-material/MoreVert"
 import { Button } from "@mui/material"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
+import api from "../api/api"
 
 export default function NavBar() {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -24,29 +25,29 @@ export default function NavBar() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
 
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
-
-  const messages = [
-    "Hello, this is message 1",
-    "This is message 2",
-    "And this is message 3",
-  ]
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const res = await axios.get("/Notification", {
-  //         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-  //       })
-  //       console.log(res)
-  //     } catch (e) {
-  //       console.log(e)
-  //     }
-  //   }
-  //   fetchData()
-  // })
+  const [notifications, setNotifications] = useState([])
+  const [numOfNewNotifications, setNumOfNewNotifications] = useState(0)
 
   useEffect(() => {
-    console.log(router.route)
+    async function fetchData() {
+      try {
+        const res = await api.get("/Notification", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        })
+        setNotifications(res.data)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    fetchData()
   }, [])
+
+  useEffect(() => {
+    setNumOfNewNotifications(0)
+    notifications.forEach((notification) => {
+      notification.isSeen || setNumOfNewNotifications((prev) => prev + 1)
+    })
+  }, [notifications])
 
   const handleNotificationsOpen = (event) => {
     setAnchorNotification(event.currentTarget)
@@ -107,6 +108,23 @@ export default function NavBar() {
     </Menu>
   )
 
+  // useEffect(() => { // idk czm nie dziala :(
+  //   async function setAsSeen() {
+  //     try {
+  //       const res = await api.post("/Notification", {
+  //         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+  //       })
+  //     } catch (e) {
+  //       console.log(e)
+  //     }
+  //   }
+  //   isNotificationsOpen || setAsSeen()
+  // }, [isNotificationsOpen])
+
+  function handleNotificationClicked(id) {
+    console.log(id)
+  }
+
   const renderNotificationsMenu = (
     <Menu
       anchorEl={anchorNotification}
@@ -122,8 +140,14 @@ export default function NavBar() {
       open={isNotificationsOpen}
       onClose={handleNotificationsClose}
     >
-      {messages.map((message) => (
-        <MenuItem key={message}>{message}</MenuItem>
+      {notifications?.map((notification) => (
+        <MenuItem
+          key={notification.id}
+          sx={{ backgroundColor: !notification.isSeen ? "white" : "gray" }}
+          onClick={() => handleNotificationClicked(notification.id)}
+        >
+          {notification.topic}
+        </MenuItem>
       ))}
     </Menu>
   )
@@ -145,9 +169,12 @@ export default function NavBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={handleNotificationsOpen}>
+      <MenuItem
+        onClick={handleNotificationsOpen}
+        // disabled={numOfNewNotifications == 0}
+      >
         <IconButton size="large" color="inherit">
-          <Badge badgeContent={messages.length} color="error">
+          <Badge badgeContent={numOfNewNotifications} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -206,8 +233,9 @@ export default function NavBar() {
               aria-label="show 17 new notifications"
               color="inherit"
               onClick={handleNotificationsOpen}
+              // disabled={numOfNewNotifications == 0}
             >
-              <Badge badgeContent={messages.length} color="error">
+              <Badge badgeContent={numOfNewNotifications} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>

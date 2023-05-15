@@ -90,9 +90,12 @@ export default function addPlace(props) {
 
   const filters = currentCategory?.filters?.map((filter, index) => (
     <FormControl sx={{ width: "100%" }}>
-      <InputLabel id="filter">{filter.name}</InputLabel>
+      <InputLabel id="filter" required>
+        {filter.name}
+      </InputLabel>
       <Select
         name="filter"
+        required
         label="filter"
         variant="standard"
         disabled={filter.values == undefined}
@@ -175,7 +178,9 @@ export default function addPlace(props) {
           />
 
           <FormControl>
-            <InputLabel id="category">Category</InputLabel>
+            <InputLabel id="category" required>
+              Category
+            </InputLabel>
             <Select
               labelId="category"
               required

@@ -10,24 +10,7 @@ export default function filterBar(props) {
   const [currentTags, setCurrentTags] = useState([])
 
   useEffect(() => {
-    async function fetchPlaces() {
-      try {
-        const res = await api.get("/TouristPlace", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          params: {
-            CategoryId: currentCategory?.id,
-            FilterValueId: currentTags[0],
-          },
-        })
-        props.changePlaces(res.data)
-        console.log(res.data)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    fetchPlaces()
+    props.applyFilters(currentCategory, currentTags)
   }, [currentCategory, currentTags])
 
   const filters = currentCategory?.filters?.map((filter, index) => (

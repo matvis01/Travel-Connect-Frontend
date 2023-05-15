@@ -24,20 +24,27 @@ export default function Home() {
         console.log(err)
       }
     }
-    async function fetchPlaces() {
-      try {
-        const res = await api.get("/TouristPlace", {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        })
-        setPlaces(res.data)
-        console.log(res.data)
-      } catch (err) {
-        console.log(err)
-      }
-    }
+
     fetchPlaces()
     fetchCategories()
   }, [])
+
+  async function fetchPlaces(category = {}, tags = []) {
+    try {
+      const res = await api.get("/TouristPlace", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        params: {
+          CategoryId: category?.id,
+          FilterValueId: tags[0],
+        },
+      })
+      setPlaces(res.data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <>
@@ -45,6 +52,9 @@ export default function Home() {
       <FilterBar
         categories={categories}
         changePlaces={(elements) => setPlaces(elements)}
+        applyFilters={(c, t) => {
+          fetchPlaces(c, t)
+        }}
       />
       <Container
         sx={{
