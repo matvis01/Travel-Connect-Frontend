@@ -108,7 +108,7 @@ export default function NavBar() {
     </Menu>
   )
 
-  // useEffect(() => { // idk czm nie dziala :(
+  // useEffect(() => { // na backu nie dziala
   //   async function setAsSeen() {
   //     try {
   //       const res = await api.post("/Notification", {
