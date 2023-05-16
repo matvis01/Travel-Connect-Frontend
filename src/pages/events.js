@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react"
 import NavBar from "../components/navBar"
 import FilterBar from "../components/filterBar"
 import api from "../api/api"
-
+import EventCard from "@/components/eventCard"
+import { Container } from "@mui/material"
 export default function Events() {
   const [events, setEvents] = useState([])
   const [categories, setCategories] = useState()
@@ -35,7 +36,6 @@ export default function Events() {
         },
       })
       setEvents(res.data)
-      console.log(res.data)
     } catch (err) {
       console.log(err)
     }
@@ -44,13 +44,27 @@ export default function Events() {
   return (
     <>
       <NavBar />
-      <FilterBar
+      {/* <FilterBar
         categories={categories}
         changePlaces={(elements) => setPlaces(elements)}
         applyFilters={(c, t) => {
           // fetchEvents(c, t)
         }}
-      />
+      /> */}
+      <Container
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-around",
+          margin: "10px",
+          padding: "10px",
+          gap: "10px",
+        }}
+      >
+        {events.map((event) => (
+          <EventCard key={event.id} event={event} />
+        ))}
+      </Container>
     </>
   )
 }
