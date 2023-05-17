@@ -6,6 +6,8 @@ import CardMedia from "@mui/material/CardMedia"
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import api from "../api/api"
+import dayjs from "dayjs"
+
 export default function eventCard(props) {
   const {
     id,
@@ -18,6 +20,16 @@ export default function eventCard(props) {
     isEditable,
   } = props.event
   const [isSignedUpState, setIsSignedUpState] = useState(isSignedUp)
+  const [formattedDates, setFormattedDates] = useState({
+    startingDate: "",
+    endingDate: "",
+  })
+
+  useEffect(() => {
+    const stDate = dayjs(startsAt).format("DD/MM/YYYY HH:mm")
+    const enDate = dayjs(endsAt).format("DD/MM/YYYY HH:mm")
+    setFormattedDates({ startingDate: stDate, endingDate: enDate })
+  }, [])
 
   async function handleSignUpOrOut() {
     const upOrOut = isSignedUpState ? "sign-out" : "sign-up"
@@ -49,8 +61,8 @@ export default function eventCard(props) {
         <Typography variant="body2" color="text.secondary">
           {description}
         </Typography>
-        <Typography> starts at: {startsAt}</Typography>
-        <Typography> ends at: {endsAt}</Typography>
+        <Typography> starts at: {formattedDates.startingDate}</Typography>
+        <Typography> ends at: {formattedDates.endingDate}</Typography>
       </CardContent>
       <CardActions>
         <Button size="small">See Details</Button>

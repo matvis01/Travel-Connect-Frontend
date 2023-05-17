@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useMemo, useLayoutEffect } from "react"
 import {
   Modal,
   Box,
@@ -20,7 +20,7 @@ export default function addPlace(props) {
   const [currentCategory, setCurrentCategory] = useState()
   const [currentTags, setCurrentTags] = useState([])
   const [images, setImages] = useState([])
-  useEffect(() => {
+  useLayoutEffect(() => {
     setCategories(props.categories)
   }, [props.categories])
 
@@ -70,7 +70,7 @@ export default function addPlace(props) {
           },
         })
         console.log(res.data)
-        props.handleClose()
+        props.handleClose(res.data)
       } catch (err) {
         console.log(err)
       }
@@ -88,35 +88,39 @@ export default function addPlace(props) {
     setImages([])
   }
 
-  const filters = currentCategory?.filters?.map((filter, index) => (
-    <FormControl sx={{ width: "100%" }}>
-      <InputLabel id="filter" required>
-        {filter.name}
-      </InputLabel>
-      <Select
-        name="filter"
-        required
-        label="filter"
-        variant="standard"
-        disabled={filter.values == undefined}
-        onChange={(event) => {
-          setCurrentTags((prev) => {
-            const updatedTags = [...prev]
-            updatedTags[index] = event.target.value
-            return updatedTags
-          })
-        }}
-      >
-        {filter.values?.map((tag, i) => {
-          return (
-            <MenuItem value={tag} key={i}>
-              {tag.value}
-            </MenuItem>
-          )
-        })}
-      </Select>
-    </FormControl>
-  ))
+  const filters = useMemo(
+    () =>
+      currentCategory?.filters?.map((filter, index) => (
+        <FormControl sx={{ width: "100%" }} key={index}>
+          <InputLabel id="filter" required>
+            {filter.name}
+          </InputLabel>
+          <Select
+            name="filter"
+            required
+            label="filter"
+            variant="standard"
+            disabled={filter.values == undefined}
+            onChange={(event) => {
+              setCurrentTags((prev) => {
+                const updatedTags = [...prev]
+                updatedTags[index] = event.target.value
+                return updatedTags
+              })
+            }}
+          >
+            {filter.values?.map((tag, i) => {
+              return (
+                <MenuItem value={tag} key={i}>
+                  {tag.value}
+                </MenuItem>
+              )
+            })}
+          </Select>
+        </FormControl>
+      )),
+    [currentCategory]
+  )
 
   return (
     <>

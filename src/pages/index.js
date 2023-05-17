@@ -8,10 +8,14 @@ import api from "../api/api"
 
 export default function Home() {
   const [addPlace, setAddPlace] = useState(false)
-  const handleOpen = () => setAddPlace(true)
-  const handleClose = () => setAddPlace(false)
   const [categories, setCategories] = useState()
   const [places, setPlaces] = useState([])
+  const handleOpen = () => setAddPlace(true)
+  const handleClose = (place) => {
+    //setPlaces((prev) => [place, ...prev])
+    fetchPlaces()
+    setAddPlace(false)
+  }
 
   useEffect(() => {
     async function fetchCategories() {
@@ -51,7 +55,6 @@ export default function Home() {
       <NavBar />
       <FilterBar
         categories={categories}
-        changePlaces={(elements) => setPlaces(elements)}
         applyFilters={(c, t) => {
           fetchPlaces(c, t)
         }}
@@ -77,6 +80,7 @@ export default function Home() {
           open={addPlace}
           handleClose={handleClose}
           categories={categories}
+          setPlaces={setPlaces}
         />
         {places?.length > 0 &&
           places.map((place) => <PlaceCard key={place.id} place={place} />)}

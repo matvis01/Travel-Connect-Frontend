@@ -3,10 +3,13 @@ import NavBar from "../components/navBar"
 import FilterBar from "../components/filterBar"
 import api from "../api/api"
 import EventCard from "@/components/eventCard"
-import { Container } from "@mui/material"
+import { Button, Container } from "@mui/material"
+import AddEvent from "../components/addEvent"
+
 export default function Events() {
   const [events, setEvents] = useState([])
   const [categories, setCategories] = useState()
+  const [adding, setAdding] = useState(false)
 
   useEffect(() => {
     async function fetchCategories() {
@@ -51,6 +54,20 @@ export default function Events() {
           // fetchEvents(c, t)
         }}
       /> */}
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => setAdding(true)}
+      >
+        Add Event
+      </Button>
+      <AddEvent
+        open={adding}
+        handleClose={(thisEvent) => {
+          setEvents([...events, thisEvent])
+          setAdding(false)
+        }}
+      />
       <Container
         sx={{
           display: "flex",
