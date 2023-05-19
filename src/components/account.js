@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Box, Button, TextField, Typography } from "@mui/material"
 import { useState, useEffect } from "react"
-
+import api from "../api/api"
 export default function Account() {
   const [name, setName] = useState("Jakub")
   const [surname, setSurname] = useState("Gil")
@@ -35,6 +35,24 @@ export default function Account() {
       description: "Description of current event",
     },
   ])
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await api.get("/Account", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        setName(res.data.firstName)
+        setSurname(res.data.lastName)
+        setEmail(res.data.email)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fetchData()
+  }, [])
 
   const handlePasswordChange = () => {
     //to do change user password logic

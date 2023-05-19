@@ -63,8 +63,9 @@ export default function Events() {
       </Button>
       <AddEvent
         open={adding}
-        handleClose={(thisEvent) => {
-          setEvents([...events, thisEvent])
+        handleClose={() => {
+          // setEvents([...events, thisEvent])
+          fetchEvents()
           setAdding(false)
         }}
       />

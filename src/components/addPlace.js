@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useMemo, useLayoutEffect } from "react"
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  useLayoutEffect,
+  useRef,
+} from "react"
 import {
   Modal,
   Box,
@@ -15,7 +21,10 @@ import api from "../api/api"
 import Select from "@mui/material/Select"
 
 export default function addPlace(props) {
-  const [place, setPlace] = useState()
+  const [place, setPlace] = useState({
+    lat: null,
+    lng: null,
+  })
   const [categories, setCategories] = useState()
   const [currentCategory, setCurrentCategory] = useState()
   const [currentTags, setCurrentTags] = useState([])
@@ -88,6 +97,19 @@ export default function addPlace(props) {
     setImages([])
   }
 
+  const formRef = useRef()
+  const isBtnActive = () => {
+    if (formRef.current == undefined) return false
+    const data = new FormData(formRef.current)
+    return (
+      data.get("Name") &&
+      place.lat &&
+      images.length > 0 &&
+      currentCategory &&
+      currentTags.length > 0
+    )
+  }
+
   const filters = useMemo(
     () =>
       currentCategory?.filters?.map((filter, index) => (
@@ -137,6 +159,7 @@ export default function addPlace(props) {
       >
         <Box
           component="form"
+          ref={formRef}
           onSubmit={handleSubmit}
           sx={{
             backgroundColor: "white",
@@ -206,7 +229,9 @@ export default function addPlace(props) {
             </Select>
           </FormControl>
           <Box sx={{ display: "flex" }}>{filters}</Box>
-          <Button type="submit">Submit</Button>
+          <Button type="submit" disabled={!isBtnActive()}>
+            Submit
+          </Button>
         </Box>
       </Modal>
     </>
