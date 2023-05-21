@@ -4,7 +4,7 @@ import { FormControl, InputLabel, Select, MenuItem } from "@mui/material"
 import api from "../api/api"
 import { Filter } from "@mui/icons-material"
 
-export default function filterBar(props) {
+export default function FilterBar(props) {
   const { categories } = props
   const [currentCategory, setCurrentCategory] = useState({})
   const [currentTags, setCurrentTags] = useState([])

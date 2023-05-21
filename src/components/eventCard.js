@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography"
 import api from "../api/api"
 import dayjs from "dayjs"
 
-export default function eventCard(props) {
+export default function EventCard(props) {
   const {
     id,
     name,

@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography"
 import { Button, CardActionArea, CardActions } from "@mui/material"
 import { useRouter } from "next/router"
 
-export default function placeCard(props) {
+export default function PlaceCard(props) {
   const router = useRouter()
   const { id } = props.place
   const handleClick = () => {

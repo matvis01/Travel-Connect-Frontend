@@ -20,7 +20,7 @@ import GoogleMapsInput from "./googleMapsInput"
 import api from "../api/api"
 import Select from "@mui/material/Select"
 
-export default function addPlace(props) {
+export default function AddPlace(props) {
   const [place, setPlace] = useState({
     lat: null,
     lng: null,

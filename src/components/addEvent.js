@@ -5,7 +5,7 @@ import api from "../api/api"
 import Autocomplete from "@mui/material/Autocomplete"
 import dayjs from "dayjs"
 
-export default function addEvent(props) {
+export default function AddEvent(props) {
   const [places, setPlaces] = useState([])
   const [thisEvent, setThisEvent] = useState({
     name: "",
