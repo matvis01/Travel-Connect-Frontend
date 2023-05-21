@@ -34,8 +34,8 @@ export default function Events() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         params: {
-          CategoryId: category?.id,
-          FilterValueId: tags[0],
+          // CategoryId: category?.id,
+          // FilterValueId: tags[0],
         },
       })
       setEvents(res.data)
@@ -44,20 +44,63 @@ export default function Events() {
     }
   }
 
+  async function generateReport() {
+    try {
+      const res = await api.post(
+        "/Events/generate-report",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          //responseType: "blob", // Set the response type to 'blob' to receive binary data
+        }
+      )
+      console.log(res)
+      if (res.data.size == 0) {
+        console.log("No data")
+        return
+      }
+      // const url = window.URL.createObjectURL(new Blob([res.data]))
+
+      // const link = document.createElement("a")
+      // link.href = url
+      // link.setAttribute("download", "report.pdf") // Set the desired file name
+      // document.body.appendChild(link)
+      // link.click()
+
+      // document.body.removeChild(link)
+      // window.URL.revokeObjectURL(url)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <>
       <NavBar />
-      {/* <FilterBar
-        categories={categories}
-        changePlaces={(elements) => setPlaces(elements)}
+      <FilterBar
+        // categories={categories}
+        // changePlaces={(elements) => setPlaces(elements)}
         applyFilters={(c, t) => {
           // fetchEvents(c, t)
         }}
-      /> */}
+      />
+      <Button variant="contained" color="primary" onClick={generateReport}>
+        {/* idk gdzie to dac */}
+        Report
+      </Button>
       <Button
         variant="contained"
         color="primary"
         onClick={() => setAdding(true)}
+        sx={{
+          marginLeft: "auto",
+          marginRight: "auto",
+          display: "block",
+          marginTop: "10px",
+          marginBottom: "30px",
+        }}
       >
         Add Event
       </Button>
@@ -71,12 +114,11 @@ export default function Events() {
       />
       <Container
         sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-around",
-          margin: "10px",
-          padding: "10px",
-          gap: "10px",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          justifyContent: "center",
+          justifyItems: "center",
+          gap: "30px",
         }}
       >
         {events.map((event) => (

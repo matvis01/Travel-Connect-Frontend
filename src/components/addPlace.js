@@ -69,23 +69,23 @@ export default function addPlace(props) {
       photos: imageUrls,
     }
 
-    async function postPlace() {
-      console.log(finishedPlace)
-      try {
-        const res = await api.post("/TouristPlace", finishedPlace, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-        })
-        console.log(res.data)
-        props.handleClose(res.data)
-      } catch (err) {
-        console.log(err)
-      }
-    }
+    // async function postPlace() {
+    //   console.log(finishedPlace)
+    //   try {
+    //     const res = await api.post("/TouristPlace", finishedPlace, {
+    //       headers: {
+    //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //         "Content-Type": "application/json",
+    //       },
+    //     })
+    //     console.log(res.data)
+    //     props.handleClose(res.data)
+    //   } catch (err) {
+    //     console.log(err)
+    //   }
+    // }
 
-    postPlace()
+    // postPlace()
   }
   const handleChange = (newFile) => {
     newFile.length == 0

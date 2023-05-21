@@ -59,11 +59,24 @@ export default function Home() {
           fetchPlaces(c, t)
         }}
       />
+      <Button
+        onClick={handleOpen}
+        variant="contained"
+        sx={{
+          marginLeft: "auto",
+          marginRight: "auto",
+          display: "block",
+          marginTop: "30px",
+        }}
+      >
+        add place
+      </Button>
       <Container
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+          justifyItems: "center",
+          justifyContent: "center",
           marginBottom: "100px",
           marginTop: "0px",
           width: "100%",
@@ -71,11 +84,6 @@ export default function Home() {
           pt: "30px",
         }}
       >
-        <div className="addCard">
-          <Button onClick={handleOpen} variant="contained">
-            add place
-          </Button>
-        </div>
         <AddPlace
           open={addPlace}
           handleClose={handleClose}

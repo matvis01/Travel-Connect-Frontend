@@ -48,28 +48,30 @@ export default function filterBar(props) {
         boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
       }}
     >
-      <FormControl sx={{ width: "20%", m: 1 }}>
-        <InputLabel id="category">Category</InputLabel>
-        <Select
-          labelId="category"
-          id="category"
-          autoWidth
-          label="category"
-          onChange={(event) => {
-            setCurrentTags([])
-            setCurrentCategory(event.target.value)
-          }}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {categories?.map((category) => (
-            <MenuItem key={category.id} value={category}>
-              {category.name}
+      {categories != null && (
+        <FormControl sx={{ width: "20%", m: 1 }}>
+          <InputLabel id="category">Category</InputLabel>
+          <Select
+            labelId="category"
+            id="category"
+            autoWidth
+            label="category"
+            onChange={(event) => {
+              setCurrentTags([])
+              setCurrentCategory(event.target.value)
+            }}
+          >
+            <MenuItem value="">
+              <em>None</em>
             </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+            {categories?.map((category) => (
+              <MenuItem key={category.id} value={category}>
+                {category.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
       {filters}
     </Box>
   )

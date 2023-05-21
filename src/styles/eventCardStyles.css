@@ -1,36 +1,19 @@
-.eventCard{
-   display:flex;
-   flex-direction: column;
-   background-color: rgb(212, 211, 211);
-   margin-bottom:50px;
-   border-radius: 2%;
-   max-width: 375px;
-   align-items: center;
-   justify-content: center;
+.eventCard {
+  /* background-color: rgb(212, 211, 211);
+  margin-bottom: 50px;
+  border-radius: 2%;
+  max-width: 375px;
+  align-items: center;
+  justify-content: center; */
 }
-.addButton{
-   display:0pinline-block;
-   height:75x;
-   background-color: rgb(124, 83, 83);
-   width: 50%; 
-   border-radius: 5%;
-   margin-top: 50px;
-   margin-bottom:50px;
-   margin-left:50px;
-   /* only for moment i must do this scalable */
-}
-.addButton:hover{
-   background-color: rgb(180, 177, 177);
-}
-.filter-div{
-   margin:0px;
-   display:flex;
-   justify-content: space-between;
-   width: 100%;
-   flex-direction: row;
-   margin-left:-8px;
-   background-color: rgb(7, 172, 201);
-   height: 70px;
-   padding-left:8px;
-   padding-right:8px;
+.addButton {
+  display: 0 inline-block;
+  height: 75x;
+  background-color: rgb(124, 83, 83);
+  width: 50%;
+  border-radius: 5%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-left: 50px;
+  /* only for moment i must do this scalable */
 }

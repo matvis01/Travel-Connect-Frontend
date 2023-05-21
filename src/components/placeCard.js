@@ -13,12 +13,24 @@ export default function placeCard(props) {
     router.push(`/destination/${id}`)
   }
   const { name, photoUrl, description } = props.place
+
+  const shorterDescription = () => {
+    if (description.length < 100) return description
+    let desc = description.split(" ")
+    let words = desc.splice(0, 13)
+    words.push("...")
+    desc = words.join(" ")
+    return desc
+  }
   return (
-    <Card className="eventCard">
-      <CardActionArea>
+    <Card sx={{ height: "350px", width: "350px" }}>
+      <CardActionArea
+        onClick={handleClick}
+        sx={{ cursor: "pointer", height: "100%" }}
+      >
         <CardMedia
           component="img"
-          height="140"
+          sx={{ height: "200px", width: "100%", objectFit: "cover" }}
           image={photoUrl || "https://picsum.photos/id/575/2000"}
           alt="image"
         />
@@ -27,22 +39,24 @@ export default function placeCard(props) {
             {name || "Nazwa miejsca"}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Opis miejsca:
-            {description ||
-              "Reprehenderit officia consectetur ad ullamco cillum velit magna amet tempor id eiusmod id elit velit. Consequat ea consequat deserunt sunt. Eu sint ullamco qui tempor nulla esse in dolor veniam fugiat velit."}
+            {shorterDescription()}
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      {/* <CardActions>
         <Button
           className="signButton"
           size="small"
           color="primary"
           onClick={handleClick}
+          sx={{
+            position: "relative",
+            bottom: 0,
+          }}
         >
           See details
         </Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   )
 }
