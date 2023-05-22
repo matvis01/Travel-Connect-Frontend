@@ -74,8 +74,9 @@ export default function Home() {
       <Container
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          justifyItems: "center",
+          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 500px))",
+          minWidth: "90%",
+          // justifyItems: "center",
           justifyContent: "center",
           marginBottom: "100px",
           marginTop: "0px",
@@ -93,6 +94,7 @@ export default function Home() {
         {places?.length > 0 &&
           places.map((place) => <PlaceCard key={place.id} place={place} />)}
       </Container>
+      <div className="abstract-shape"></div>
     </>
   )
 }

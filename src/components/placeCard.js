@@ -17,20 +17,32 @@ export default function PlaceCard(props) {
   const shorterDescription = () => {
     if (description.length < 100) return description
     let desc = description.split(" ")
-    let words = desc.splice(0, 13)
+    let words = desc.splice(0, 17)
     words.push("...")
     desc = words.join(" ")
     return desc
   }
   return (
-    <Card sx={{ height: "350px", width: "350px" }}>
+    <Card
+      sx={{
+        margin: "10px",
+        flexGrow: 1,
+        ":hover": { transform: "scale(1.07)", zIndex: "1" },
+        transition: "all 0.15s ease-in-out",
+      }}
+    >
       <CardActionArea
-        onClick={handleClick}
+        // onClick={handleClick}
+        href={`/destination/${id}`}
         sx={{ cursor: "pointer", height: "100%" }}
       >
         <CardMedia
           component="img"
-          sx={{ height: "200px", width: "100%", objectFit: "cover" }}
+          sx={{
+            //height: "70%",
+            //objectFit: "cover",
+            maxHeight: "300px",
+          }}
           image={photoUrl || "https://picsum.photos/id/575/2000"}
           alt="image"
         />
