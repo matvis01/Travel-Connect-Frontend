@@ -86,13 +86,35 @@ export default function Events() {
           // fetchEvents(c, t)
         }}
       />
-      <Button variant="contained" color="primary" onClick={generateReport}>
+                  <Button variant="contained" color="primary" onClick={generateReport}
+                    sx={{
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      display: "block",
+                      marginTop: "20px",
+                      marginBottom: "20px",
+                    }}>
         {/* idk gdzie to dac */}
-        Report
+        Generate Report
       </Button>
+      <Container
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          justifyContent: "center",
+          justifyItems: "center",
+          marginBottom: "30px",
+          gap: "30px",
+        }}
+      >
+        
+        {events.map((event) => (
+          <EventCard key={event.id} event={event} />
+        ))}
+      </Container>
       <Button
         variant="contained"
-        color="primary"
+        color="info"
         onClick={() => setAdding(true)}
         sx={{
           marginLeft: "auto",
@@ -102,7 +124,7 @@ export default function Events() {
           marginBottom: "30px",
         }}
       >
-        Add Event
+      Add Event
       </Button>
       <AddEvent
         open={adding}
@@ -112,19 +134,6 @@ export default function Events() {
           setAdding(false)
         }}
       />
-      <Container
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          justifyContent: "center",
-          justifyItems: "center",
-          gap: "30px",
-        }}
-      >
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} />
-        ))}
-      </Container>
     </>
   )
 }

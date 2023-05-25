@@ -211,7 +211,7 @@ export default function NavBar() {
             }}
             href="/"
           >
-            Home
+            PLACES
           </Button>
           <Button
             variant="text"
