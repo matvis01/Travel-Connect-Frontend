@@ -21,13 +21,3 @@ body {
     transform: translateX(calc((-200% / 3)));
   }
 }
-
-/* .abstract-shape {
-  width: 100%;
-  height: 100vw;
-  background-color: #7acdff;
-  transform: skewY(-20deg);
-  position: absolute;
-  z-index: -1;
-  top: 100vh;
-} */
