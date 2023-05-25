@@ -74,7 +74,7 @@ export default function Home() {
       <Container
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 500px))",
+          gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
           minWidth: "90%",
           // justifyItems: "center",
           justifyContent: "center",
