@@ -86,17 +86,21 @@ export default function Events() {
           // fetchEvents(c, t)
         }}
       />
-                  <Button variant="contained" color="primary" onClick={generateReport}
-                    sx={{
-                      marginLeft: "auto",
-                      marginRight: "auto",
-                      display: "block",
-                      marginTop: "20px",
-                      marginBottom: "20px",
-                    }}>
-        {/* idk gdzie to dac */}
-        Generate Report
+      <Button
+        variant="contained"
+        color="info"
+        onClick={() => setAdding(true)}
+        sx={{
+          marginLeft: "auto",
+          marginRight: "auto",
+          display: "block",
+          marginTop: "30px",
+          marginBottom: "30px",
+        }}
+      >
+        Add Event
       </Button>
+
       <Container
         sx={{
           display: "grid",
@@ -107,24 +111,24 @@ export default function Events() {
           gap: "30px",
         }}
       >
-        
         {events.map((event) => (
           <EventCard key={event.id} event={event} />
         ))}
       </Container>
       <Button
         variant="contained"
-        color="info"
-        onClick={() => setAdding(true)}
+        color="primary"
+        onClick={generateReport}
         sx={{
           marginLeft: "auto",
           marginRight: "auto",
           display: "block",
-          marginTop: "10px",
-          marginBottom: "30px",
+          marginTop: "20px",
+          marginBottom: "20px",
         }}
       >
-      Add Event
+        {/* idk gdzie to dac */}
+        Generate Report
       </Button>
       <AddEvent
         open={adding}

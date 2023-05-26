@@ -59,12 +59,25 @@ export default function Home() {
           fetchPlaces(c, t)
         }}
       />
-     
+      <Button
+        color="info"
+        onClick={handleOpen}
+        variant="contained"
+        sx={{
+          marginLeft: "auto",
+          marginRight: "auto",
+          display: "block",
+          marginTop: "20px",
+        }}
+      >
+        add place
+      </Button>
+
       <Container
         sx={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
-          minWidth: "90%",
+          //minWidth: "90%",
           // justifyItems: "center",
           justifyContent: "center",
           marginBottom: "10px",
@@ -84,17 +97,6 @@ export default function Home() {
           places.map((place) => <PlaceCard key={place.id} place={place} />)}
       </Container>
       <div className="abstract-shape"></div>
-      <Button color="info"
-        onClick={handleOpen}
-        variant="contained"
-        sx={{
-          marginLeft: "auto",
-          marginRight: "auto",
-          display: "block",
-        }}
-      >
-        add place
-      </Button>
     </>
   )
 }
