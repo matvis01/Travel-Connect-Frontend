@@ -69,6 +69,7 @@ export default function Home() {
           display: "block",
           marginTop: "20px",
         }}
+        title="Add a single place"
       >
         add place
       </Button>

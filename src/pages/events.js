@@ -97,6 +97,7 @@ export default function Events() {
           marginTop: "30px",
           marginBottom: "30px",
         }}
+        title="Add a single event"
       >
         Add Event
       </Button>
@@ -126,6 +127,7 @@ export default function Events() {
           marginTop: "20px",
           marginBottom: "20px",
         }}
+        title="Press to generate report"
       >
         {/* idk gdzie to dac */}
         Generate Report

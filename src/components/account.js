@@ -59,46 +59,107 @@ export default function Account() {
   }
 
   return (
-    <Box sx={{ padding: 2 }}>
-      <Typography variant="h4" sx={{ marginBottom: 2 }}>
+    <Box
+      sx={{
+        padding: 2,
+        backgroundColor: "#E8F1F8",
+      }}
+    >
+      <Typography variant="h3" sx={{ marginBottom: 5, marginTop: 5, textAlign: "center", fontWeight: "bold" }}>
         User Profile
       </Typography>
-      <Box sx={{ marginBottom: 2 }}>
-        <Typography variant="h6">Name</Typography>
+      <Box
+        sx={{
+          marginBottom: 2,
+          padding: 2,
+          border: "1px solid #CCCCCC",
+          backgroundColor: "#F7F7F7",
+          borderRadius: "4px",
+        }}
+      >
+        <Typography variant="h6" sx={{  }}>
+          Name
+        </Typography>
         <Typography>{name}</Typography>
       </Box>
-      <Box sx={{ marginBottom: 2 }}>
-        <Typography variant="h6">Surname</Typography>
+      <Box
+        sx={{
+          marginBottom: 2,
+          padding: 2,
+          border: "1px solid #CCCCCC",
+          backgroundColor: "#F7F7F7",
+          borderRadius: "4px",
+        }}
+      >
+        <Typography variant="h6" sx={{  }}>
+          Surname
+        </Typography>
         <Typography>{surname}</Typography>
       </Box>
-      <Box sx={{ marginBottom: 2 }}>
-        <Typography variant="h6">Email address</Typography>
+      <Box
+        sx={{
+          marginBottom: 2,
+          padding: 2,
+          border: "1px solid #CCCCCC",
+          backgroundColor: "#F7F7F7",
+          borderRadius: "4px",
+        }}
+      >
+        <Typography variant="h6" sx={{  }}>
+          Email address
+        </Typography>
         <Typography>{email}</Typography>
       </Box>
-      <Box sx={{ marginBottom: 2 }}>
-        <Typography variant="h6">Password</Typography>
-        <TextField
-          type="password"
-          label="Current password"
-          sx={{ marginBottom: 1 }}
-        />
-        <TextField
-          type="password"
-          label="New password"
-          sx={{ marginBottom: 1 }}
-        />
-        <TextField
-          type="password"
-          label="Confirm new password"
-          sx={{ marginBottom: 1 }}
-        />
-      </Box>
-      <Box sx={{ marginBottom: 2 }}>
-        <Button variant="contained" onClick={handlePasswordChange}>
-          Change password
-        </Button>
-      </Box>
-      <Box sx={{ marginBottom: 4 }}>
+      <Box
+  sx={{
+    marginBottom: 2,
+    padding: 2,
+    border: "1px solid #CCCCCC",
+    backgroundColor: "#F7F7F7",
+    borderRadius: "4px",
+  }}
+>
+  <Typography variant="h6" sx={{  }}>
+    Password
+  </Typography>
+  <TextField
+    type="password"
+    label="Current password"
+    sx={{ marginBottom: 1, width: "100%" }}
+  />
+  <TextField
+    type="password"
+    label="New password"
+    sx={{ marginBottom: 1, width: "100%" }}
+  />
+  <TextField
+    type="password"
+    label="Confirm new password"
+    sx={{ marginBottom: 1, width: "100%" }}
+  />
+  <Button
+  variant="contained"
+  onClick={handlePasswordChange}
+  sx={{
+    "&:active": {
+      transform: "scale(0.98)",
+      boxShadow: "none",
+    },
+  }}
+>
+  Change password
+</Button>
+</Box>
+
+      <Box
+        sx={{
+          marginBottom: 2,
+          padding: 2,
+          border: "1px solid #CCCCCC",
+          backgroundColor: "#F7F7F7",
+          borderRadius: "4px",
+        }}
+      >
         <Typography variant="h6">Your current events</Typography>
         {currentEvents.map((event) => (
           <Box key={event.id} sx={{ marginBottom: 1 }}>
@@ -108,7 +169,14 @@ export default function Account() {
           </Box>
         ))}
       </Box>
-      <Box>
+      <Box
+        sx={{
+          padding: 2,
+          border: "1px solid #CCCCCC",
+          backgroundColor: "#F7F7F7",
+          borderRadius: "4px",
+        }}
+      >
         <Typography variant="h6">Event history</Typography>
         {events.map((event) => (
           <Box key={event.id} sx={{ marginBottom: 1 }}>
