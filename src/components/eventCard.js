@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import Card from "@mui/material/Card"
 import CardActions from "@mui/material/CardActions"
 import CardContent from "@mui/material/CardContent"
@@ -24,6 +25,11 @@ export default function EventCard(props) {
     startingDate: "",
     endingDate: "",
   })
+  const eventId=id;
+  const router = useRouter()
+    const handleClick = () => {
+    router.push(`/details/${eventId}`)
+  }
 
   useEffect(() => {
     const stDate = dayjs(startsAt).format("DD/MM/YYYY HH:mm")
@@ -35,7 +41,7 @@ export default function EventCard(props) {
     const upOrOut = isSignedUpState ? "sign-out" : "sign-up"
     try {
       const res = await api.put(
-        `/Events/${id}/${upOrOut}`,
+        `/Events/${eventId}/${upOrOut}`,
         {},
         {
           headers: {
@@ -65,7 +71,7 @@ export default function EventCard(props) {
         <Typography> ends at: {formattedDates.endingDate}</Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">See Details</Button>
+        <Button size="small" onClick={handleClick}>See Details</Button>
         {canSignUp && (
           <Button size="small" onClick={handleSignUpOrOut}>
             {isSignedUpState ? "sign out" : "sign up"}
