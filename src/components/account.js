@@ -1,6 +1,16 @@
 import * as React from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
 import { useState, useEffect } from "react";
+
 import api from "../api/api";
 export default function Account() {
   const [name, setName] = useState("Jakub");
@@ -9,6 +19,7 @@ export default function Account() {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
+  let isError = false;
   useEffect(() => {
     async function fetchData() {
       try {
@@ -28,8 +39,6 @@ export default function Account() {
   }, []);
 
   const handlePasswordChange = async () => {
-    console.log(password);
-    console.log(newPassword);
     try {
       const res = await api.put(
         "/Users/change-password",
@@ -45,7 +54,9 @@ export default function Account() {
       );
       console.log(res);
     } catch (err) {
-      console.log(err);
+      isError = true;
+      console.log(isError);
+      //tutaj
     }
   };
 
@@ -122,9 +133,11 @@ export default function Account() {
           Password
         </Typography>
         <TextField
+          error={isError}
+          helperText={isError ? "Wrong current password!" : ""}
           type="password"
           label="Current password"
-          onchange={(e) => {
+          onChange={(e) => {
             setPassword(e.target.value);
           }}
           sx={{ marginBottom: 1, width: "100%" }}
@@ -132,7 +145,7 @@ export default function Account() {
         <TextField
           type="password"
           label="New password"
-          onchange={(e) => {
+          onChange={(e) => {
             setNewPassword(e.target.value);
           }}
           sx={{ marginBottom: 1, width: "100%" }}
@@ -140,7 +153,7 @@ export default function Account() {
         <TextField
           type="password"
           label="Confirm new password"
-          onchange={(e) => {
+          onChange={(e) => {
             setNewPassword(e.target.value);
           }}
           sx={{ marginBottom: 1, width: "100%" }}
