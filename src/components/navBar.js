@@ -35,7 +35,7 @@ export default function NavBar() {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
         //etNotifications(res.data)
-        setNotifications(() => res.data.reverse())
+        setNotifications(() => res.data.reverse().slice(0, 5))
       } catch (e) {
         console.log(e)
       }

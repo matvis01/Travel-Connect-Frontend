@@ -27,19 +27,15 @@ export default function Events() {
     //fetchCategories()
   }, [])
 
-  async function fetchEvents(category = {}, tags = []) {
+  async function fetchEvents() {
     try {
       const res = await api.get("/Events", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        params: {
-          // CategoryId: category?.id,
-          // FilterValueId: tags[0],
-        },
+        params: {},
       })
       setEvents(res.data)
-      console.log(res.data)
     } catch (err) {
       console.log(err)
     }
@@ -83,9 +79,11 @@ export default function Events() {
       <FilterBar
         // categories={categories}
         // changePlaces={(elements) => setPlaces(elements)}
-        applyFilters={(c, t) => {
-          // fetchEvents(c, t)
-        }}
+        // applyFilters={(c, t) => {
+        //   // fetchEvents(c, t)
+        // }}
+        isPlacesPage={false}
+        addEvents={setEvents}
       />
       <Button
         variant="contained"

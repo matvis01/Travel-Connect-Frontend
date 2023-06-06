@@ -19,6 +19,8 @@ import { MuiFileInput } from "mui-file-input"
 import GoogleMapsInput from "./googleMapsInput"
 import api from "../api/api"
 import Select from "@mui/material/Select"
+import InfoIcon from "@mui/icons-material/Info"
+import { useRouter } from "next/router"
 
 export default function AddPlace(props) {
   const [place, setPlace] = useState({
@@ -32,6 +34,7 @@ export default function AddPlace(props) {
   useLayoutEffect(() => {
     setCategories(props.categories)
   }, [props.categories])
+  const router = useRouter()
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -169,9 +172,19 @@ export default function AddPlace(props) {
             gap: "20px",
           }}
         >
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Create Place
-          </Typography>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Create Place
+            </Typography>
+            <InfoIcon
+              onClick={() => {
+                router.push(
+                  "https://httoixguhkpljzhckejp.supabase.co/storage/v1/object/public/cover-images/photo-207cc49f-4257-4c94-8680-3b1df31f133e.pdf"
+                )
+              }}
+              sx={{ cursor: "pointer" }}
+            />
+          </Box>
           <TextField
             id="Name"
             name="Name"
