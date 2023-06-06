@@ -12,7 +12,7 @@ export default function FilterBar(props) {
   useLayoutEffect(() => {
     props.applyFilters(currentCategory, currentTags)
   }, [currentCategory, currentTags])
-
+  
   const filters = currentCategory?.filters?.map((filter, index) => (
     <FormControl sx={{ minWidth: 120, m: 1 }} key={filter.id}>
       <InputLabel id="filter">{filter.name}</InputLabel>

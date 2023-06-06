@@ -39,6 +39,7 @@ export default function Events() {
         },
       })
       setEvents(res.data)
+      console.log(res.data)
     } catch (err) {
       console.log(err)
     }
