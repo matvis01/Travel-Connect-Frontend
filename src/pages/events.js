@@ -58,16 +58,6 @@ export default function Events() {
         console.log("No data")
         return
       }
-      // const url = window.URL.createObjectURL(new Blob([res.data]))
-
-      // const link = document.createElement("a")
-      // link.href = url
-      // link.setAttribute("download", "report.pdf") // Set the desired file name
-      // document.body.appendChild(link)
-      // link.click()
-
-      // document.body.removeChild(link)
-      // window.URL.revokeObjectURL(url)
     } catch (err) {
       console.log(err)
     }

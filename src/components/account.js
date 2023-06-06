@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import {
   Box,
   Button,
@@ -8,18 +8,18 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-} from "@mui/material";
-import { useState, useEffect } from "react";
+  Alert,
+} from "@mui/material"
+import { useState, useEffect } from "react"
 
-import api from "../api/api";
+import api from "../api/api"
 export default function Account() {
-  const [name, setName] = useState("Jakub");
-  const [surname, setSurname] = useState("Gil");
-  const [email, setEmail] = useState("jakub.gil@example.com");
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-
-  let isError = false;
+  const [name, setName] = useState("Jakub")
+  const [surname, setSurname] = useState("Gil")
+  const [email, setEmail] = useState("jakub.gil@example.com")
+  const [password, setPassword] = useState("")
+  const [newPassword, setNewPassword] = useState("")
+  const [isError, setIsError] = useState(false)
   useEffect(() => {
     async function fetchData() {
       try {
@@ -27,16 +27,16 @@ export default function Account() {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        });
-        setName(res.data.firstName);
-        setSurname(res.data.lastName);
-        setEmail(res.data.email);
+        })
+        setName(res.data.firstName)
+        setSurname(res.data.lastName)
+        setEmail(res.data.email)
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     }
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   const handlePasswordChange = async () => {
     try {
@@ -51,14 +51,16 @@ export default function Account() {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
-      );
-      console.log(res);
+      )
+      console.log(res)
+      setIsError(false)
     } catch (err) {
-      isError = true;
-      console.log(isError);
+      setIsError(true)
+      console.log(isError)
+      setPassword("")
       //tutaj
     }
-  };
+  }
 
   return (
     <Box
@@ -87,9 +89,7 @@ export default function Account() {
           borderRadius: "4px",
         }}
       >
-        <Typography variant="h6" sx={{}}>
-          Name
-        </Typography>
+        <Typography variant="h6">Name</Typography>
         <Typography>{name}</Typography>
       </Box>
       <Box
@@ -138,7 +138,7 @@ export default function Account() {
           type="password"
           label="Current password"
           onChange={(e) => {
-            setPassword(e.target.value);
+            setPassword(e.target.value)
           }}
           sx={{ marginBottom: 1, width: "100%" }}
         />
@@ -146,7 +146,7 @@ export default function Account() {
           type="password"
           label="New password"
           onChange={(e) => {
-            setNewPassword(e.target.value);
+            setNewPassword(e.target.value)
           }}
           sx={{ marginBottom: 1, width: "100%" }}
         />
@@ -154,7 +154,7 @@ export default function Account() {
           type="password"
           label="Confirm new password"
           onChange={(e) => {
-            setNewPassword(e.target.value);
+            setNewPassword(e.target.value)
           }}
           sx={{ marginBottom: 1, width: "100%" }}
         />
@@ -172,5 +172,5 @@ export default function Account() {
         </Button>
       </Box>
     </Box>
-  );
+  )
 }
