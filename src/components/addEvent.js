@@ -4,6 +4,8 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker"
 import api from "../api/api"
 import Autocomplete from "@mui/material/Autocomplete"
 import dayjs from "dayjs"
+import InfoIcon from "@mui/icons-material/Info"
+import { useRouter } from "next/router"
 
 export default function AddEvent(props) {
   const [places, setPlaces] = useState([])
@@ -14,6 +16,8 @@ export default function AddEvent(props) {
     endsAt: "",
     touristPlaceId: "",
   })
+
+  const router = useRouter()
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -89,9 +93,19 @@ export default function AddEvent(props) {
             gap: "20px",
           }}
         >
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Create Event
-          </Typography>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Create Event
+            </Typography>
+            <InfoIcon
+              onClick={() => {
+                router.push(
+                  "https://httoixguhkpljzhckejp.supabase.co/storage/v1/object/public/cover-images/photo-e9d6eb9c-0fbd-4b18-bb0b-49551e694e73.pdf"
+                )
+              }}
+              sx={{ cursor: "pointer" }}
+            />
+          </Box>
           <TextField
             id="Name"
             name="Name"

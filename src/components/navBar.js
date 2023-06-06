@@ -34,7 +34,8 @@ export default function NavBar() {
         const res = await api.get("/Notification", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
-        setNotifications(res.data)
+        //etNotifications(res.data)
+        setNotifications(() => res.data.reverse().slice(0, 5))
       } catch (e) {
         console.log(e)
       }
@@ -108,21 +109,25 @@ export default function NavBar() {
     </Menu>
   )
 
-  // useEffect(() => { // na backu nie dziala
-  //   async function setAsSeen() {
-  //     try {
-  //       const res = await api.post("/Notification", {
-  //         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-  //       })
-  //     } catch (e) {
-  //       console.log(e)
-  //     }
-  //   }
-  //   isNotificationsOpen || setAsSeen()
-  // }, [isNotificationsOpen])
+  useEffect(() => {
+    // na backu nie dziala
+    async function setAsSeen() {
+      try {
+        const res = await api.post("/Notification", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    isNotificationsOpen || setAsSeen()
+  }, [isNotificationsOpen])
 
-  function handleNotificationClicked(id) {
-    console.log(id)
+  function handleNotificationClicked(notification) {
+    console.log(notification)
+    if (notification.topic === "Wygenerowano raport") {
+      router.push(notification.content)
+    }
   }
 
   const renderNotificationsMenu = (
@@ -144,7 +149,7 @@ export default function NavBar() {
         <MenuItem
           key={notification.id}
           sx={{ backgroundColor: !notification.isSeen ? "white" : "gray" }}
-          onClick={() => handleNotificationClicked(notification.id)}
+          onClick={() => handleNotificationClicked(notification)}
         >
           {notification.topic}
         </MenuItem>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import NavBar from "../components/navBar"
 import AddPlace from "../components/addPlace"
 import PlaceCard from "../components/placeCard"
@@ -13,51 +13,20 @@ export default function Home() {
   const handleOpen = () => setAddPlace(true)
   const handleClose = (place) => {
     //setPlaces((prev) => [place, ...prev])
-    fetchPlaces()
     setAddPlace(false)
-  }
-
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const res = await api.get("/Category", {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        })
-        setCategories(res.data)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-
-    fetchPlaces()
-    fetchCategories()
-  }, [])
-
-  async function fetchPlaces(category = {}, tags = []) {
-    try {
-      const res = await api.get("/TouristPlace", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        params: {
-          CategoryId: category?.id,
-          FilterValueId: tags[0],
-        },
-      })
-      setPlaces(res.data)
-    } catch (err) {
-      console.log(err)
-    }
   }
 
   return (
     <>
       <NavBar />
       <FilterBar
-        categories={categories}
-        applyFilters={(c, t) => {
-          fetchPlaces(c, t)
-        }}
+        // categories={categories}
+        // applyFilters={(c, t) => {
+        //   fetchPlaces(c, t)
+        // }}
+        // placesNames={names}
+        isPlacesPage={true}
+        addPlaces={setPlaces}
       />
       <Button
         color="info"
