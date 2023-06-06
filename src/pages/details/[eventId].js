@@ -23,7 +23,7 @@ export default function Destination({ eventId }) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_ANALITICS_API_KEY,
   })
-  const [events, setEvents] = useState()
+  const [event, setEvent] = useState()
 
   useEffect(() => {
     async function fetchData() {
@@ -34,7 +34,7 @@ export default function Destination({ eventId }) {
           },
         })
         console.log(res.data)
-        setEvents(res.data)
+        setEvent(res.data)
       } catch (err) {
         console.log(err)
       }
@@ -68,7 +68,7 @@ export default function Destination({ eventId }) {
             fontWeight: "medium",
           }}
         >
-          Totalnie swienty event poznalem tam czlowieka o imieniu Jakub GIL
+         {event?.name}
         </Typography>
         <Typography
           variant="body1"
@@ -84,12 +84,12 @@ export default function Destination({ eventId }) {
             borderBottom: "1px solid",
           }}
         >
-          Czasem lepiej jesc kebaba niz tanczyc na waleta 
+          {event?.description}
         </Typography>
 
 
         {isLoaded ? (
-            <span>czerwony rum dekalog</span>
+            <span></span>
         ) : (
           <h1>Loading...</h1>
         )}
