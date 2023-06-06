@@ -3,6 +3,7 @@ import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import dayjs from "dayjs";
 import {
   Typography,
   Grid,
@@ -24,8 +25,15 @@ export default function Destination({ eventId }) {
     googleMapsApiKey: process.env.NEXT_PUBLIC_ANALITICS_API_KEY,
   });
   const [event, setEvent] = useState();
+  const [TouristPlace, setTouristPlace] = useState();
+  const stDate = dayjs(event?.startsAt).format("DD/MM/YYYY HH:mm");
+  const enDate = dayjs(event?.endsAt).format("DD/MM/YYYY HH:mm");
 
   useEffect(() => {
+    async function fetches() {
+      await fetchData();
+      await fetchData2();
+    }
     async function fetchData() {
       try {
         const res = await api.get(`/Events/${eventId}`, {
@@ -40,8 +48,22 @@ export default function Destination({ eventId }) {
         console.log(err);
       }
     }
-    fetchData();
-  }, []);
+    async function fetchData2() {
+      try {
+        const res = await api.get(`/TouristPlace/${event.touristPlaceId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        console.log(res.data);
+        setTouristPlace(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    fetches();
+  }, [event]);
 
   return (
     <>
@@ -119,7 +141,77 @@ export default function Destination({ eventId }) {
         >
           Number of participants: {event?.signedUpUsersCount}
         </Typography>
-        {isLoaded ? <span></span> : <h1>Loading...</h1>}
+        <Typography
+          variant="body1"
+          sx={{
+            flexGrow: 1,
+            marginTop: "10px",
+            marginBottom: "10px",
+            width: "80%",
+            backgroundColor: "#c1cfe1",
+            WebkitBorderRadius: "5px",
+            padding: "10px",
+            borderTop: "1px solid",
+            borderBottom: "1px solid",
+          }}
+        >
+          Starts At: {stDate}
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            flexGrow: 1,
+            marginTop: "10px",
+            marginBottom: "10px",
+            width: "80%",
+            backgroundColor: "#c1cfe1",
+            WebkitBorderRadius: "5px",
+            padding: "10px",
+            borderTop: "1px solid",
+            borderBottom: "1px solid",
+          }}
+        >
+          End at: {enDate}
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            flexGrow: 1,
+            marginTop: "10px",
+            marginBottom: "10px",
+            width: "80%",
+            backgroundColor: "#c1cfe1",
+            WebkitBorderRadius: "5px",
+            padding: "10px",
+            borderTop: "1px solid",
+            borderBottom: "1px solid",
+          }}
+        >
+          Place:{TouristPlace?.name}
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            flexGrow: 1,
+            marginTop: "10px",
+            marginBottom: "10px",
+            width: "80%",
+            backgroundColor: "#c1cfe1",
+            WebkitBorderRadius: "5px",
+            padding: "10px",
+            borderTop: "1px solid",
+            borderBottom: "1px solid",
+          }}
+        >
+          Place description:{TouristPlace?.description}
+        </Typography>
+        <ImageList sx={{ width: "80%" }} variant="woven" cols={3} gap={8}>
+          {TouristPlace?.photos?.map((item, i) => (
+            <ImageListItem key={i}>
+              <img src={item.url} loading="lazy" />
+            </ImageListItem>
+          ))}
+        </ImageList>
       </Container>
     </>
   );
