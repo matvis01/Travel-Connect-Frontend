@@ -109,20 +109,6 @@ export default function NavBar() {
     </Menu>
   )
 
-  useEffect(() => {
-    // na backu nie dziala
-    async function setAsSeen() {
-      try {
-        const res = await api.post("/Notification", {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        })
-      } catch (e) {
-        console.log(e)
-      }
-    }
-    isNotificationsOpen || setAsSeen()
-  }, [isNotificationsOpen])
-
   function handleNotificationClicked(notification) {
     console.log(notification)
     if (notification.topic === "Wygenerowano raport") {

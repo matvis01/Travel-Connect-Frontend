@@ -1,9 +1,9 @@
-import NavBar from "@/components/navBar";
-import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useRouter } from "next/router";
-import dayjs from "dayjs";
+import NavBar from "@/components/navBar"
+import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api"
+import { useEffect } from "react"
+import { useState } from "react"
+import { useRouter } from "next/router"
+import dayjs from "dayjs"
 import {
   Typography,
   Grid,
@@ -15,55 +15,48 @@ import {
   ImageListItem,
   Container,
   backdropClasses,
-} from "@mui/material";
-import { BorderAllRounded, Margin } from "@mui/icons-material";
-import api from "../../api/api";
-import { headers } from "next/dist/client/components/headers";
+} from "@mui/material"
+import { BorderAllRounded, Margin } from "@mui/icons-material"
+import api from "../../api/api"
+import { headers } from "next/dist/client/components/headers"
 
 export default function Destination({ eventId }) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_ANALITICS_API_KEY,
-  });
-  const [event, setEvent] = useState();
-  const [TouristPlace, setTouristPlace] = useState();
-  const stDate = dayjs(event?.startsAt).format("DD/MM/YYYY HH:mm");
-  const enDate = dayjs(event?.endsAt).format("DD/MM/YYYY HH:mm");
+  })
+  const [event, setEvent] = useState()
+  const [TouristPlace, setTouristPlace] = useState()
+  const stDate = dayjs(event?.startsAt).format("DD/MM/YYYY HH:mm")
+  const enDate = dayjs(event?.endsAt).format("DD/MM/YYYY HH:mm")
 
   useEffect(() => {
-    async function fetches() {
-      await fetchData();
-      await fetchData2();
-    }
     async function fetchData() {
       try {
         const res = await api.get(`/Events/${eventId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        });
-        console.log(res);
-        console.log(res.data);
-        setEvent(res.data);
+        })
+        setEvent(res.data)
+        fetchData2(res.data.touristPlaceId)
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     }
-    async function fetchData2() {
+    async function fetchData2(id) {
       try {
-        const res = await api.get(`/TouristPlace/${event.touristPlaceId}`, {
+        const res = await api.get(`/TouristPlace/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        });
-        console.log(res.data);
-        setTouristPlace(res.data);
+        })
+        setTouristPlace(res.data)
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     }
-
-    fetches();
-  }, [event]);
+    fetchData()
+  }, [])
 
   return (
     <>
@@ -214,16 +207,16 @@ export default function Destination({ eventId }) {
         </ImageList>
       </Container>
     </>
-  );
+  )
 }
 
 export async function getServerSideProps(context) {
-  const { query } = context;
-  const { eventId } = query;
+  const { query } = context
+  const { eventId } = query
 
   return {
     props: {
       eventId,
     },
-  };
+  }
 }

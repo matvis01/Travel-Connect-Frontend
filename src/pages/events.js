@@ -24,7 +24,6 @@ export default function Events() {
     }
 
     fetchEvents()
-    //fetchCategories()
   }, [])
 
   async function fetchEvents() {
@@ -66,15 +65,7 @@ export default function Events() {
   return (
     <>
       <NavBar />
-      <FilterBar
-        // categories={categories}
-        // changePlaces={(elements) => setPlaces(elements)}
-        // applyFilters={(c, t) => {
-        //   // fetchEvents(c, t)
-        // }}
-        isPlacesPage={false}
-        addEvents={setEvents}
-      />
+      <FilterBar isPlacesPage={false} addEvents={setEvents} />
       <Button
         variant="contained"
         color="info"
