@@ -31,9 +31,20 @@ export default function AddPlace(props) {
   const [currentCategory, setCurrentCategory] = useState()
   const [currentTags, setCurrentTags] = useState([])
   const [images, setImages] = useState([])
-  useLayoutEffect(() => {
-    setCategories(props.categories)
-  }, [props.categories])
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const res = await api.get("/Category", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        })
+        setCategories(res.data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    fetchCategories()
+  }, [])
   const router = useRouter()
 
   async function handleSubmit(event) {
